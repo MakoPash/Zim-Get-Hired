@@ -1,0 +1,2892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZimGetHired - Premium AI-Assisted Talent Matching</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Premium Zimbabwe-inspired palette */
+            --emerald: #047857;
+            --deep-emerald: #065f46;
+            --gold: #D4AF37;
+            --charcoal: #1f2937;
+            --light-gold: #fef3c7;
+            
+            /* Original Zimbabwe colors */
+            --zim-green: #00843D;
+            --zim-yellow: #FCD116;
+            --zim-red: #DE2010;
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-soft: 0 8px 32px rgba(4, 120, 87, 0.12);
+            --shadow-hover: 0 12px 40px rgba(4, 120, 87, 0.18);
+            
+            /* UI colors */
+            --bg-primary: #f9fafb;
+            --text-dark: #111827;
+            --text-muted: #6b7280;
+            --whatsapp-green: #25D366;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f9fafb 0%, #ecfdf5 100%);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Premium Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(4, 120, 87, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 0;
+            box-shadow: var(--shadow-soft);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 12px 28px;
+            background: white;
+            border: 2px solid transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab:hover {
+            background: var(--emerald);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.3);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            padding: 40px 0;
+            min-height: 80vh;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero with Background Images */
+        .hero {
+            background: linear-gradient(135deg, rgba(4, 120, 87, 0.95) 0%, rgba(6, 95, 70, 0.95) 100%),
+                        url('https://i.imgur.com/ScImUS2.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            border-radius: 30px;
+            padding: 80px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-hover);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ticker */
+        .ticker-wrap {
+            background: linear-gradient(135deg, var(--charcoal) 0%, #374151 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .ticker-badge {
+            background: var(--gold);
+            color: var(--charcoal);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* Value Cards */
+        .value-props {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--emerald), var(--gold));
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .value-card h3 {
+            color: var(--emerald);
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        .value-card .highlight {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--light-gold) 0%, #fef9e7 100%);
+            border-radius: 15px;
+            border-left: 4px solid var(--gold);
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="time"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid rgba(4, 120, 87, 0.1);
+            border-radius: 15px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 4px rgba(4, 120, 87, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Searchable Role Selector */
+        .role-search-container {
+            margin-bottom: 15px;
+        }
+
+        .role-search {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid rgba(4, 120, 87, 0.1);
+            border-radius: 15px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .role-search:focus {
+            outline: none;
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 4px rgba(4, 120, 87, 0.1);
+        }
+
+        .role-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            min-height: 60px;
+            border: 2px dashed rgba(4, 120, 87, 0.2);
+        }
+
+        .role-tag {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .role-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+        }
+
+        .role-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .role-option {
+            padding: 15px;
+            background: white;
+            border: 2px solid rgba(4, 120, 87, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .role-option:hover {
+            border-color: var(--emerald);
+            background: rgba(4, 120, 87, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .role-option.selected {
+            border-color: var(--emerald);
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+        }
+
+        /* Select All Button */
+        .select-all-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .select-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* WhatsApp Input Styling */
+        .whatsapp-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .whatsapp-prefix {
+            padding: 14px 15px;
+            background: var(--emerald);
+            color: white;
+            border-radius: 15px;
+            font-weight: 600;
+            border: 2px solid var(--emerald);
+        }
+
+        .whatsapp-input {
+            flex: 1;
+        }
+
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--emerald);
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .file-upload:hover {
+            background: rgba(4, 120, 87, 0.05);
+            border-color: var(--deep-emerald);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 12px;
+            color: var(--emerald);
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(4, 120, 87, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--whatsapp-green) 0%, #128c7e 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 25px;
+            margin-top: 25px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question h4 {
+            margin-bottom: 18px;
+            color: var(--emerald);
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border: 2px solid rgba(4, 120, 87, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: var(--emerald);
+            background: rgba(4, 120, 87, 0.05);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--emerald);
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.3);
+        }
+
+        /* Candidate Card */
+        .candidate-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .candidate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--emerald), var(--gold));
+        }
+
+        .candidate-card.premium-match {
+            border: 3px solid var(--gold);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .hidden-gem-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .candidate-info h3 {
+            color: var(--emerald);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .match-score {
+            text-align: center;
+            min-width: 110px;
+        }
+
+        .score-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 auto 12px;
+            box-shadow: 0 8px 25px rgba(4, 120, 87, 0.4);
+            position: relative;
+        }
+
+        .score-circle::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            opacity: 0.5;
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            background: rgba(4, 120, 87, 0.1);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex: 1;
+            margin-left: 20px;
+            max-width: 220px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--emerald), var(--gold));
+            transition: width 0.6s ease;
+            border-radius: 10px;
+        }
+
+        /* Skill Tags */
+        .skills-match {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .skill-tag {
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-matched {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+        }
+
+        .skill-missing {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #dc2626;
+            border: 2px solid #dc2626;
+        }
+
+        /* WhatsApp Contact Button */
+        .whatsapp-btn {
+            background: linear-gradient(135deg, var(--whatsapp-green) 0%, #128c7e 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #dc2626;
+            transform: rotate(90deg);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid var(--emerald);
+            color: #065f46;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .success-message h3 {
+            color: var(--emerald);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Admin Dashboard */
+        .admin-table {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .admin-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(4, 120, 87, 0.1);
+        }
+
+        .admin-table tr:hover {
+            background: rgba(4, 120, 87, 0.05);
+        }
+
+        /* Job Board Cards */
+        .job-board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .job-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .job-card.inactive {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
+
+        .job-status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .job-status-live {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .job-status-paused {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        /* Stats Pulse */
+        .stats-pulse {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--glass-border);
+            z-index: 99;
+            min-width: 200px;
+        }
+
+        .stats-pulse h4 {
+            color: var(--emerald);
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(4, 120, 87, 0.1);
+        }
+
+        .stat-value {
+            color: var(--emerald);
+            font-weight: 700;
+        }
+
+        /* Career Tips & Insights */
+        .career-tips, .insights-sidebar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 30px;
+        }
+
+        .career-tips h3, .insights-sidebar h3 {
+            color: var(--emerald);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .tip-item, .insight-item {
+            display: flex;
+            gap: 15px;
+            padding: 18px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .tip-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.1);
+        }
+
+        .tip-icon {
+            font-size: 24px;
+            min-width: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero {
+                padding: 50px 25px;
+            }
+
+            .value-props {
+                grid-template-columns: 1fr;
+            }
+
+            .candidate-header {
+                flex-direction: column;
+            }
+
+            .stats-pulse {
+                display: none;
+            }
+
+            .job-board-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Additional Polish */
+        ::selection {
+            background: var(--emerald);
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--emerald);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--deep-emerald);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        /* Job Management Buttons */
+        .job-manage-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .job-manage-btn.pause {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .job-manage-btn.activate {
+            background: #10b981;
+            color: white;
+        }
+
+        /* Detail Rows */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(4, 120, 87, 0.1);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, var(--light-gold) 0%, #fef9e7 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--gold);
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .explanation strong {
+            color: var(--emerald);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Zim<span>Get</span>Hired</div>
+                <nav class="nav-tabs">
+                    <button class="nav-tab active" onclick="showSection('home')">🏠 Home</button>
+                    <button class="nav-tab" onclick="showSection('jobboard')">📋 Job Board</button>
+                    <button class="nav-tab" onclick="showSection('jobseeker')">👤 Job Seeker</button>
+                    <button class="nav-tab" onclick="showSection('employer')">💼 Employer</button>
+                    <button class="nav-tab" onclick="showSection('admin')" style="opacity: 0.5;" title="Admin Access">⚙️ Admin</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- HOME SECTION -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>🇿🇼 Welcome to ZimGetHired</h1>
+                <p>Premium AI-Powered Talent Matching for Zimbabwe</p>
+            </div>
+
+            <div class="ticker-wrap">
+                <span class="ticker-badge">💡 LIVE</span>
+                <div class="ticker-content">
+                    <marquee>Job Seekers: Profiles with Video Intros get 4x more WhatsApp interview requests! | Employers: 20+ active candidates ready to start immediately | New: Apply directly from our Job Board | Pro Tip: Complete your profile for cross-role discovery!</marquee>
+                </div>
+            </div>
+
+            <div class="value-props">
+                <div class="value-card">
+                    <h3>For Employers</h3>
+                    <p>Stop wasting weeks reviewing hundreds of CVs. Our AI discovers hidden talent across roles and delivers instant matches with WhatsApp contact.</p>
+                    <div class="highlight">
+                        "See unlimited matched candidates instantly with direct WhatsApp contact."
+                    </div>
+                    <ul style="text-align: left; margin-top: 20px; color: var(--text-muted); line-height: 2;">
+                        <li>✓ AI-powered cross-role discovery</li>
+                        <li>✓ Direct WhatsApp contact for all candidates</li>
+                        <li>✓ Job persistence with alerts for new matches</li>
+                        <li>✓ Premium Top 5 + unlimited additional matches</li>
+                    </ul>
+                </div>
+
+                <div class="value-card">
+                    <h3>For Job Seekers</h3>
+                    <p>Create one profile and get discovered for ALL matching roles. Apply directly from our Job Board or get contacted automatically when you're a match.</p>
+                    <div class="highlight">
+                        "Get discovered for roles you didn't even apply to."
+                    </div>
+                    <ul style="text-align: left; margin-top: 20px; color: var(--text-muted); line-height: 2;">
+                        <li>✓ Select unlimited professional roles</li>
+                        <li>✓ Direct WhatsApp communication</li>
+                        <li>✓ Browse & apply from Job Board</li>
+                        <li>✓ Professional personality assessment</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOB BOARD SECTION -->
+        <section id="jobboard" class="section">
+            <div class="form-container">
+                <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">Public Job Board</h2>
+                <p style="color: var(--text-muted); margin-bottom: 35px;">Browse all available positions and apply directly. Your match score will be calculated automatically!</p>
+            </div>
+
+            <div id="jobBoardContainer" class="job-board-grid">
+                <!-- Jobs will be inserted here -->
+            </div>
+        </section>
+
+        <!-- JOB SEEKER SECTION -->
+        <section id="jobseeker" class="section">
+            <div class="career-tips">
+                <h3>🚀 The Zim Career Edge</h3>
+                <div class="tip-item">
+                    <div class="tip-icon">💬</div>
+                    <div class="tip-content">
+                        <strong>WhatsApp Etiquette</strong>
+                        <p>Reply within 2 hours to stay at the top of employer lists. Quick responses show professionalism.</p>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">🎥</div>
+                    <div class="tip-content">
+                        <strong>Video Introduction Power</strong>
+                        <p>4x more interview requests! Keep it 30-60 seconds, smile, and mention your top 3 skills.</p>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">🎯</div>
+                    <div class="tip-content">
+                        <strong>Cross-Role Discovery</strong>
+                        <p>Our AI matches you to roles you didn't select if your skills fit. Select ALL relevant roles!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">Create Your Profile</h2>
+                <p style="color: var(--text-muted); margin-bottom: 35px;">Fill out your profile once and get matched with relevant opportunities automatically</p>
+
+                <form id="jobseekerForm">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="js_name" required placeholder="e.g. Tendai Moyo">
+                    </div>
+
+                    <div class="form-group">
+                        <label>WhatsApp Number * (Zimbabwe)</label>
+                        <div class="whatsapp-input-group">
+                            <div class="whatsapp-prefix">+263</div>
+                            <input type="tel" id="js_whatsapp" class="whatsapp-input" required placeholder="77 123 4567" maxlength="10">
+                        </div>
+                        <small style="color: var(--text-muted); display: block; margin-top: 8px;">Enter your number without the +263 (e.g., 77 123 4567)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="js_email" required placeholder="e.g. tendai@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>City/Location *</label>
+                        <select id="js_location" required>
+                            <option value="">Select city...</option>
+                            <option value="Harare">Harare</option>
+                            <option value="Bulawayo">Bulawayo</option>
+                            <option value="Mutare">Mutare</option>
+                            <option value="Gweru">Gweru</option>
+                            <option value="Kwekwe">Kwekwe</option>
+                            <option value="Kadoma">Kadoma</option>
+                            <option value="Masvingo">Masvingo</option>
+                            <option value="Chinhoyi">Chinhoyi</option>
+                            <option value="Victoria Falls">Victoria Falls</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Professional Roles * (Search or Select All)</label>
+                        <button type="button" class="select-all-btn" onclick="selectAllRoles()">✨ Select All Roles</button>
+                        
+                        <div class="role-search-container">
+                            <input type="text" class="role-search" id="roleSearch" placeholder="🔍 Search roles..." onkeyup="filterRoles()">
+                        </div>
+
+                        <div class="role-tags-container" id="selectedRolesDisplay">
+                            <span style="color: var(--text-muted); font-size: 13px;">Selected roles will appear here...</span>
+                        </div>
+
+                        <div class="role-grid" id="roleGrid">
+                            <!-- Roles will be dynamically inserted -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skills (comma-separated) * - Add ALL your skills!</label>
+                        <input type="text" id="js_skills" required placeholder="e.g. JavaScript, Excel, Communication, Sales, Photoshop">
+                        <small style="color: var(--text-muted); display: block; margin-top: 8px;">💡 Include soft skills (Communication, Leadership) and technical skills for better matches!</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Years of Experience *</label>
+                        <select id="js_experience" required>
+                            <option value="">Select...</option>
+                            <option value="0-1">0-1 years</option>
+                            <option value="1-3">1-3 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5+">5+ years</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload CV *</label>
+                        <div class="file-upload" onclick="document.getElementById('cv_upload').click()">
+                            <input type="file" id="cv_upload" accept=".pdf,.doc,.docx">
+                            <p style="font-size: 18px; margin-bottom: 8px;">📄</p>
+                            <p style="font-weight: 600;">Click to upload CV</p>
+                            <p style="font-size: 13px; color: var(--text-muted);">(PDF, DOC, DOCX)</p>
+                            <div id="cv_filename" class="file-name"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Video Introduction (Recommended!) 🌟</label>
+                        <div class="file-upload" onclick="document.getElementById('video_upload').click()">
+                            <input type="file" id="video_upload" accept="video/*">
+                            <p style="font-size: 18px; margin-bottom: 8px;">🎥</p>
+                            <p style="font-weight: 600;">Click to upload video</p>
+                            <p style="font-size: 13px; color: var(--text-muted);">(MP4, MOV - 4x more requests!)</p>
+                            <div id="video_filename" class="file-name"></div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-block" onclick="startPersonalityTest()">
+                        Continue to Personality Assessment →
+                    </button>
+                </form>
+
+                <div id="testSection" style="display: none;">
+                    <!-- Test will be inserted here -->
+                </div>
+
+                <div id="jobseekerSuccess" style="display: none;" class="success-message">
+                    <h3>✅ Profile Created Successfully!</h3>
+                    <p>Your profile is now visible to employers on ZimGetHired.</p>
+                    <p style="margin-top: 12px;">You'll be contacted via WhatsApp when you match with relevant opportunities!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPLOYER SECTION -->
+        <section id="employer" class="section">
+            <div class="insights-sidebar">
+                <h3>📊 Market Pulse - Live Insights</h3>
+                <div class="insight-item">
+                    <strong>Salary Benchmark:</strong> Junior Web Developers in Harare: $450-$750/month average.
+                </div>
+                <div class="insight-item">
+                    <strong>Hot Skills:</strong> React, Excel, and WhatsApp Business are most in-demand this month.
+                </div>
+                <div class="insight-item">
+                    <strong>Quick-Hire Tip:</strong> Candidates with video intros respond 3x faster.
+                </div>
+                <div class="insight-item">
+                    <strong>Cross-Role Discovery:</strong> Our AI finds hidden gems with transferable skills.
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">Post a Job & Get Instant Matches</h2>
+                <p style="color: var(--text-muted); margin-bottom: 35px;">Post once and get unlimited matched candidates with direct WhatsApp contact</p>
+
+                <form id="employerForm">
+                    <div class="form-group">
+                        <label>Company Name *</label>
+                        <input type="text" id="emp_company" required placeholder="e.g. Tech Innovations Zim">
+                    </div>
+
+                    <div class="form-group">
+                        <label>WhatsApp Number * (for alerts)</label>
+                        <div class="whatsapp-input-group">
+                            <div class="whatsapp-prefix">+263</div>
+                            <input type="tel" id="emp_whatsapp" class="whatsapp-input" required placeholder="77 123 4567" maxlength="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email * (for alerts)</label>
+                        <input type="email" id="emp_email" required placeholder="e.g. hr@company.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Title *</label>
+                        <input type="text" id="emp_jobtitle" required placeholder="e.g. Junior Web Developer">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Role Category *</label>
+                        <select id="emp_role" required onchange="updateJobDescription()">
+                            <option value="">Select a role category...</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Sales & Marketing">Sales & Marketing</option>
+                            <option value="Administration">Administration</option>
+                            <option value="Design & Creative">Design & Creative</option>
+                            <option value="Agriculture">Agriculture</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Education">Education</option>
+                            <option value="Hospitality">Hospitality</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Mining">Mining</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Description *</label>
+                        <textarea id="emp_description" required placeholder="Describe the role, responsibilities, and requirements..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>What are you looking for? (Select preferences)</label>
+                        <div class="role-grid">
+                            <div class="role-option" onclick="toggleEmployerPreference(this, 'trustworthy')">
+                                <input type="checkbox" value="trustworthy" style="display: none;">
+                                🤝 Trustworthy
+                            </div>
+                            <div class="role-option" onclick="toggleEmployerPreference(this, 'experienced')">
+                                <input type="checkbox" value="experienced" style="display: none;">
+                                ⭐ Experienced
+                            </div>
+                            <div class="role-option" onclick="toggleEmployerPreference(this, 'energetic')">
+                                <input type="checkbox" value="energetic" style="display: none;">
+                                ⚡ Young & Energetic
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-block" onclick="postJobAndGetMatches()" style="font-size: 18px; padding: 20px;">
+                        🚀 Post Job & See All Matches
+                    </button>
+                </form>
+            </div>
+
+            <div id="resultsSection" style="display: none;">
+                <div style="background: var(--glass-bg); backdrop-filter: blur(20px); padding: 35px; border-radius: 25px; margin-bottom: 25px; box-shadow: var(--shadow-soft);">
+                    <h2 style="color: var(--emerald); margin-bottom: 12px; font-weight: 700;">All Matched Candidates</h2>
+                    <p style="color: var(--text-muted);">Top 5 marked as Premium Matches. All others shown below with direct WhatsApp contact.</p>
+                </div>
+                <div id="candidatesList">
+                    <!-- Results will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN SECTION -->
+        <section id="admin" class="section">
+            <div class="form-container">
+                <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">Admin Dashboard</h2>
+                <p style="color: var(--text-muted); margin-bottom: 35px;">Monitor platform activity and manage users</p>
+
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--emerald); margin-bottom: 20px;">📊 Platform Statistics</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%); color: white; padding: 25px; border-radius: 20px; text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700;" id="admin_total_seekers">0</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Total Job Seekers</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%); color: white; padding: 25px; border-radius: 20px; text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700;" id="admin_total_jobs">0</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Total Jobs Posted</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 25px; border-radius: 20px; text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700;" id="admin_total_searches">0</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Employer Searches</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, var(--whatsapp-green) 0%, #128c7e 100%); color: white; padding: 25px; border-radius: 20px; text-align: center;">
+                            <div style="font-size: 36px; font-weight: 700;" id="admin_total_applications">0</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Total Applications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--emerald); margin-bottom: 20px;">👥 All Job Seekers</h3>
+                    <div class="admin-table" id="adminJobSeekersTable">
+                        <!-- Table will be inserted -->
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--emerald); margin-bottom: 20px;">💼 All Posted Jobs</h3>
+                    <div class="admin-table" id="adminJobsTable">
+                        <!-- Table will be inserted -->
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--emerald); margin-bottom: 20px;">🔍 Recent Employer Searches</h3>
+                    <div class="admin-table" id="adminSearchLogTable">
+                        <!-- Table will be inserted -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Platform Stats Pulse -->
+    <div class="stats-pulse">
+        <h4>🔥 Live Stats</h4>
+        <div class="stat-row">
+            <span>Job Seekers:</span>
+            <span class="stat-value" id="stat-seekers">20</span>
+        </div>
+        <div class="stat-row">
+            <span>Active Jobs:</span>
+            <span class="stat-value" id="stat-jobs">0</span>
+        </div>
+        <div class="stat-row">
+            <span>Matches Today:</span>
+            <span class="stat-value" id="stat-matches">0</span>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h3 id="modalTitle" style="color: var(--emerald); font-weight: 700;"></h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA STRUCTURES
+        // ============================================
+        
+        let jobSeekers = [];
+        let postedJobs = [];
+        let employerSearchLog = [];
+        let applicationLog = [];
+        let selectedRoles = [];
+
+        // Comprehensive Zimbabwean Professional Roles
+        const PROFESSIONAL_ROLES = [
+            // Technology
+            "Junior Developer", "Senior Developer", "Web Designer", "IT Support", "Network Administrator",
+            "Data Analyst", "Software Engineer", "Mobile App Developer",
+            
+            // Sales & Marketing
+            "Sales Representative", "Marketing Manager", "Business Development", "Account Manager",
+            "Digital Marketer", "Brand Manager", "Sales Coordinator",
+            
+            // Administration
+            "Admin Assistant", "Office Manager", "Receptionist", "Executive Assistant",
+            "Data Entry Clerk", "Secretary", "Office Administrator",
+            
+            // Finance & Accounting
+            "Accountant", "Bookkeeper", "Financial Analyst", "Auditor", "Payroll Officer",
+            "Tax Consultant", "Finance Manager",
+            
+            // Healthcare
+            "Nurse", "Pharmacist", "Medical Doctor", "Physiotherapist", "Lab Technician",
+            "Healthcare Assistant", "Radiographer",
+            
+            // Education
+            "Teacher", "Lecturer", "Teaching Assistant", "Education Coordinator",
+            "School Administrator", "Tutor",
+            
+            // Hospitality & Tourism
+            "Hotel Manager", "Chef", "Waiter/Waitress", "Tour Guide", "Front Desk Officer",
+            "Restaurant Manager", "Bartender",
+            
+            // Agriculture
+            "Farm Manager", "Agricultural Officer", "Agronomist", "Livestock Manager",
+            "Irrigation Specialist", "Farm Supervisor",
+            
+            // Construction
+            "Civil Engineer", "Architect", "Quantity Surveyor", "Construction Manager",
+            "Electrician", "Plumber", "Carpenter", "Site Supervisor",
+            
+            // Mining
+            "Mining Engineer", "Geologist", "Mine Supervisor", "Safety Officer",
+            "Plant Operator", "Drilling Operator",
+            
+            // Creative & Design
+            "Graphic Designer", "Photographer", "Videographer", "UI/UX Designer",
+            "Content Creator", "Copywriter",
+            
+            // Legal
+            "Lawyer", "Legal Secretary", "Paralegal", "Compliance Officer",
+            
+            // HR & Recruitment
+            "HR Manager", "Recruitment Officer", "HR Assistant", "Training Coordinator",
+            
+            // Logistics & Transport
+            "Driver", "Logistics Manager", "Warehouse Manager", "Supply Chain Officer",
+            "Dispatch Officer",
+            
+            // Customer Service
+            "Customer Service Representative", "Call Center Agent", "Client Relations Officer",
+            
+            // Other
+            "Project Manager", "Operations Manager", "Security Officer", "Cleaner",
+            "Maintenance Technician", "Quality Control Officer"
+        ].sort();
+
+        // Universal Personality Test (not role-specific)
+        const PERSONALITY_TEST = [
+            {
+                question: "How do you handle workplace conflicts?",
+                options: [
+                    "Address issues directly and professionally",
+                    "Avoid confrontation and hope issues resolve",
+                    "Seek mediation from a supervisor",
+                    "Discuss with colleagues to find consensus"
+                ],
+                correct: 0
+            },
+            {
+                question: "What best describes your approach to punctuality?",
+                options: [
+                    "Always arrive early to prepare",
+                    "Arrive exactly on time",
+                    "Occasionally run a few minutes late",
+                    "Flexible with timing"
+                ],
+                correct: 0
+            },
+            {
+                question: "How do you prefer to work on team projects?",
+                options: [
+                    "Take initiative and lead the team",
+                    "Contribute ideas and collaborate equally",
+                    "Support others and complete assigned tasks",
+                    "Prefer to work independently"
+                ],
+                correct: 1
+            },
+            {
+                question: "When faced with a tight deadline, you:",
+                options: [
+                    "Stay calm and prioritize tasks efficiently",
+                    "Ask for help from team members",
+                    "Work extra hours to complete on time",
+                    "Inform supervisor if deadline isn't feasible"
+                ],
+                correct: 0
+            },
+            {
+                question: "How do you handle constructive criticism?",
+                options: [
+                    "Welcome it as an opportunity to improve",
+                    "Listen politely but feel defensive",
+                    "Take time to process before responding",
+                    "Immediately implement suggested changes"
+                ],
+                correct: 0
+            }
+        ];
+
+        // ============================================
+        // DEMO DATA - 20 PRE-SEEDED PROFILES
+        // ============================================
+        
+        function seedDemoProfiles() {
+            jobSeekers = [
+                {
+                    id: 1001,
+                    name: "Tendai Moyo",
+                    whatsapp: "772345678",
+                    email: "tendai.moyo@email.com",
+                    location: "Harare",
+                    roles: ["Junior Developer", "Web Designer"],
+                    skills: ["JavaScript", "React", "HTML", "CSS", "Git", "Node.js"],
+                    experience: "1-3",
+                    cvFile: "tendai_moyo_cv.pdf",
+                    videoFile: "tendai_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1002,
+                    name: "Rudo Ncube",
+                    whatsapp: "773456789",
+                    email: "rudo.ncube@email.com",
+                    location: "Bulawayo",
+                    roles: ["Sales Representative", "Marketing Manager"],
+                    skills: ["Communication", "Negotiation", "CRM", "Sales", "Customer Service"],
+                    experience: "3-5",
+                    cvFile: "rudo_ncube_cv.pdf",
+                    videoFile: "rudo_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1003,
+                    name: "Tatenda Chikwanha",
+                    whatsapp: "774567890",
+                    email: "tatenda.c@email.com",
+                    location: "Harare",
+                    roles: ["Admin Assistant", "Office Manager"],
+                    skills: ["Microsoft Office", "Excel", "Organization", "Data Entry", "Communication"],
+                    experience: "1-3",
+                    cvFile: "tatenda_c_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1004,
+                    name: "Nyasha Mudzingwa",
+                    whatsapp: "775678901",
+                    email: "nyasha.m@email.com",
+                    location: "Mutare",
+                    roles: ["Graphic Designer", "UI/UX Designer"],
+                    skills: ["Photoshop", "Illustrator", "Figma", "UI/UX", "Creativity", "Branding"],
+                    experience: "3-5",
+                    cvFile: "nyasha_m_cv.pdf",
+                    videoFile: "nyasha_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1005,
+                    name: "Farai Sibanda",
+                    whatsapp: "776789012",
+                    email: "farai.s@email.com",
+                    location: "Gweru",
+                    roles: ["Accountant", "Bookkeeper"],
+                    skills: ["Accounting", "QuickBooks", "Excel", "Financial Analysis", "Tax"],
+                    experience: "5+",
+                    cvFile: "farai_s_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1006,
+                    name: "Chipo Mapfumo",
+                    whatsapp: "777890123",
+                    email: "chipo.m@email.com",
+                    location: "Harare",
+                    roles: ["Nurse", "Healthcare Assistant"],
+                    skills: ["Patient Care", "Medical Records", "First Aid", "Communication", "Empathy"],
+                    experience: "3-5",
+                    cvFile: "chipo_m_cv.pdf",
+                    videoFile: "chipo_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1007,
+                    name: "Tinashe Dube",
+                    whatsapp: "778901234",
+                    email: "tinashe.d@email.com",
+                    location: "Bulawayo",
+                    roles: ["Teacher", "Tutor"],
+                    skills: ["Teaching", "Lesson Planning", "Student Assessment", "Communication", "Patience"],
+                    experience: "5+",
+                    cvFile: "tinashe_d_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1008,
+                    name: "Kudzai Mpofu",
+                    whatsapp: "779012345",
+                    email: "kudzai.m@email.com",
+                    location: "Harare",
+                    roles: ["Sales Representative", "Business Development"],
+                    skills: ["Sales", "Negotiation", "Communication", "CRM", "Lead Generation"],
+                    experience: "1-3",
+                    cvFile: "kudzai_m_cv.pdf",
+                    videoFile: "kudzai_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1009,
+                    name: "Rumbidzai Chakanyuka",
+                    whatsapp: "770123456",
+                    email: "rumbidzai.c@email.com",
+                    location: "Mutare",
+                    roles: ["Admin Assistant", "Secretary"],
+                    skills: ["Microsoft Office", "Excel", "Data Entry", "Organization", "Typing"],
+                    experience: "0-1",
+                    cvFile: "rumbidzai_c_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 60,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1010,
+                    name: "Blessing Ndlovu",
+                    whatsapp: "771234567",
+                    email: "blessing.n@email.com",
+                    location: "Bulawayo",
+                    roles: ["Driver", "Logistics Officer"],
+                    skills: ["Driving", "Route Planning", "Vehicle Maintenance", "Time Management", "Communication"],
+                    experience: "5+",
+                    cvFile: "blessing_n_cv.pdf",
+                    videoFile: "blessing_intro.mp4",
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1011,
+                    name: "Vimbai Musarurwa",
+                    whatsapp: "772345679",
+                    email: "vimbai.m@email.com",
+                    location: "Harare",
+                    roles: ["Marketing Manager", "Digital Marketer"],
+                    skills: ["Marketing", "Social Media", "Content Creation", "SEO", "Analytics"],
+                    experience: "3-5",
+                    cvFile: "vimbai_m_cv.pdf",
+                    videoFile: "vimbai_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1012,
+                    name: "Munyaradzi Kaseke",
+                    whatsapp: "773456780",
+                    email: "munyaradzi.k@email.com",
+                    location: "Gweru",
+                    roles: ["IT Support", "Network Administrator"],
+                    skills: ["Technical Support", "Networking", "Windows", "Linux", "Troubleshooting"],
+                    experience: "1-3",
+                    cvFile: "munyaradzi_k_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1013,
+                    name: "Tapiwa Gumbo",
+                    whatsapp: "774567891",
+                    email: "tapiwa.g@email.com",
+                    location: "Harare",
+                    roles: ["Chef", "Restaurant Manager"],
+                    skills: ["Cooking", "Menu Planning", "Food Safety", "Team Management", "Customer Service"],
+                    experience: "5+",
+                    cvFile: "tapiwa_g_cv.pdf",
+                    videoFile: "tapiwa_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1014,
+                    name: "Shuvai Moyana",
+                    whatsapp: "775678902",
+                    email: "shuvai.m@email.com",
+                    location: "Bulawayo",
+                    roles: ["HR Manager", "Recruitment Officer"],
+                    skills: ["Recruitment", "Employee Relations", "HR Policy", "Interviewing", "Training"],
+                    experience: "5+",
+                    cvFile: "shuvai_m_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1015,
+                    name: "Simba Mlambo",
+                    whatsapp: "776789013",
+                    email: "simba.m@email.com",
+                    location: "Harare",
+                    roles: ["Sales Representative", "Account Manager"],
+                    skills: ["Sales", "Account Management", "Communication", "CRM", "Negotiation"],
+                    experience: "3-5",
+                    cvFile: "simba_m_cv.pdf",
+                    videoFile: "simba_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1016,
+                    name: "Auxilia Chidziva",
+                    whatsapp: "777890124",
+                    email: "auxilia.c@email.com",
+                    location: "Mutare",
+                    roles: ["Admin Assistant", "Data Entry Clerk"],
+                    skills: ["Data Entry", "Excel", "Microsoft Office", "Typing", "Attention to Detail"],
+                    experience: "1-3",
+                    cvFile: "auxilia_c_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 80,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1017,
+                    name: "Panashe Makoni",
+                    whatsapp: "778901235",
+                    email: "panashe.m@email.com",
+                    location: "Harare",
+                    roles: ["Junior Developer", "Software Engineer"],
+                    skills: ["Python", "Django", "JavaScript", "Git", "SQL", "API Development"],
+                    experience: "1-3",
+                    cvFile: "panashe_m_cv.pdf",
+                    videoFile: "panashe_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1018,
+                    name: "Anesu Chirwa",
+                    whatsapp: "779012346",
+                    email: "anesu.c@email.com",
+                    location: "Bulawayo",
+                    roles: ["Customer Service Representative", "Receptionist"],
+                    skills: ["Customer Service", "Communication", "Problem Solving", "Microsoft Office", "Phone Etiquette"],
+                    experience: "0-1",
+                    cvFile: "anesu_c_cv.pdf",
+                    videoFile: null,
+                    personalityScore: 60,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1019,
+                    name: "Tanaka Sibanda",
+                    whatsapp: "770123457",
+                    email: "tanaka.s@email.com",
+                    location: "Gweru",
+                    roles: ["Project Manager", "Operations Manager"],
+                    skills: ["Project Management", "Leadership", "Planning", "Budgeting", "Team Coordination"],
+                    experience: "5+",
+                    cvFile: "tanaka_s_cv.pdf",
+                    videoFile: "tanaka_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                },
+                {
+                    id: 1020,
+                    name: "Primrose Mwaruwari",
+                    whatsapp: "771234568",
+                    email: "primrose.m@email.com",
+                    location: "Harare",
+                    roles: ["Sales Representative", "Marketing Coordinator"],
+                    skills: ["Sales", "Marketing", "Communication", "Social Media", "Customer Relations"],
+                    experience: "1-3",
+                    cvFile: "primrose_m_cv.pdf",
+                    videoFile: "primrose_intro.mp4",
+                    personalityScore: 100,
+                    createdAt: new Date()
+                }
+            ];
+
+            updateStats();
+            updateAdminDashboard();
+            console.log('20 demo profiles loaded!');
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
+        function initializeApp() {
+            seedDemoProfiles();
+            renderRoleGrid();
+            renderJobBoard();
+            updateStats();
+        }
+
+        // ============================================
+        // ROLE SELECTION
+        // ============================================
+        
+        function renderRoleGrid() {
+            const grid = document.getElementById('roleGrid');
+            grid.innerHTML = PROFESSIONAL_ROLES.map(role => `
+                <div class="role-option" onclick="toggleRole('${role}')" data-role="${role}">
+                    ${role}
+                </div>
+            `).join('');
+        }
+
+        function toggleRole(roleName) {
+            const element = document.querySelector(`[data-role="${roleName}"]`);
+            
+            if (selectedRoles.includes(roleName)) {
+                selectedRoles = selectedRoles.filter(r => r !== roleName);
+                element.classList.remove('selected');
+            } else {
+                selectedRoles.push(roleName);
+                element.classList.add('selected');
+            }
+            
+            updateSelectedRolesDisplay();
+        }
+
+        function updateSelectedRolesDisplay() {
+            const display = document.getElementById('selectedRolesDisplay');
+            
+            if (selectedRoles.length === 0) {
+                display.innerHTML = '<span style="color: var(--text-muted); font-size: 13px;">Selected roles will appear here...</span>';
+            } else {
+                display.innerHTML = selectedRoles.map(role => `
+                    <div class="role-tag">
+                        ${role}
+                        <span class="remove" onclick="toggleRole('${role}')">✕</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function selectAllRoles() {
+            const allRoleElements = document.querySelectorAll('.role-option');
+            
+            if (selectedRoles.length === PROFESSIONAL_ROLES.length) {
+                // Deselect all
+                selectedRoles = [];
+                allRoleElements.forEach(el => el.classList.remove('selected'));
+            } else {
+                // Select all
+                selectedRoles = [...PROFESSIONAL_ROLES];
+                allRoleElements.forEach(el => el.classList.add('selected'));
+            }
+            
+            updateSelectedRolesDisplay();
+        }
+
+        function filterRoles() {
+            const searchTerm = document.getElementById('roleSearch').value.toLowerCase();
+            const roleOptions = document.querySelectorAll('.role-option');
+            
+            roleOptions.forEach(option => {
+                const roleName = option.getAttribute('data-role').toLowerCase();
+                if (roleName.includes(searchTerm)) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        }
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+
+            if (sectionId === 'admin') {
+                updateAdminDashboard();
+            }
+
+            if (sectionId === 'jobboard') {
+                renderJobBoard();
+            }
+        }
+
+        // ============================================
+        // JOB SEEKER FUNCTIONALITY
+        // ============================================
+        
+        document.getElementById('cv_upload').addEventListener('change', function(e) {
+            const filename = e.target.files[0] ? e.target.files[0].name : '';
+            document.getElementById('cv_filename').textContent = filename ? `✓ ${filename}` : '';
+        });
+
+        document.getElementById('video_upload').addEventListener('change', function(e) {
+            const filename = e.target.files[0] ? e.target.files[0].name : '';
+            document.getElementById('video_filename').textContent = filename ? `✓ ${filename}` : '';
+        });
+
+        function startPersonalityTest() {
+            const name = document.getElementById('js_name').value.trim();
+            const whatsapp = document.getElementById('js_whatsapp').value.trim();
+            const email = document.getElementById('js_email').value.trim();
+            const location = document.getElementById('js_location').value;
+            const skills = document.getElementById('js_skills').value.trim();
+            const experience = document.getElementById('js_experience').value;
+            const cvFile = document.getElementById('cv_upload').files[0];
+
+            if (!name || !whatsapp || !email || !location || !skills || !experience || !cvFile || selectedRoles.length === 0) {
+                alert('Please fill in all required fields and select at least one role.');
+                return;
+            }
+
+            // Validate WhatsApp number
+            if (whatsapp.length < 9) {
+                alert('Please enter a valid WhatsApp number (9-10 digits)');
+                return;
+            }
+
+            document.getElementById('jobseekerForm').style.display = 'none';
+            document.getElementById('testSection').style.display = 'block';
+
+            let testHTML = `
+                <div class="quiz-container">
+                    <h3 style="color: var(--emerald); margin-bottom: 20px; font-weight: 700;">Professional Attributes & Personality Assessment</h3>
+                    <p style="margin-bottom: 35px; color: var(--text-muted);">Answer these questions honestly - there are no wrong answers!</p>
+            `;
+
+            PERSONALITY_TEST.forEach((q, index) => {
+                testHTML += `
+                    <div class="question">
+                        <h4>Question ${index + 1}: ${q.question}</h4>
+                        <div class="options">
+                `;
+                
+                q.options.forEach((option, optIndex) => {
+                    testHTML += `
+                        <div class="option" onclick="selectOption(this, ${index}, ${optIndex})">
+                            ${option}
+                        </div>
+                    `;
+                });
+
+                testHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            testHTML += `
+                <button type="button" class="btn btn-primary btn-block" onclick="submitJobSeekerProfile()">
+                    Complete Profile & Get Matched
+                </button>
+            </div>
+            `;
+
+            document.getElementById('testSection').innerHTML = testHTML;
+        }
+
+        let testAnswers = [];
+
+        function selectOption(element, questionIndex, optionIndex) {
+            element.parentElement.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+            testAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitJobSeekerProfile() {
+            const name = document.getElementById('js_name').value.trim();
+            const whatsapp = document.getElementById('js_whatsapp').value.trim();
+            const email = document.getElementById('js_email').value.trim();
+            const location = document.getElementById('js_location').value;
+            const skills = document.getElementById('js_skills').value.trim().split(',').map(s => s.trim());
+            const experience = document.getElementById('js_experience').value;
+            const cvFile = document.getElementById('cv_upload').files[0].name;
+            const videoFile = document.getElementById('video_upload').files[0]?.name || null;
+
+            let correctAnswers = 0;
+            PERSONALITY_TEST.forEach((q, index) => {
+                if (testAnswers[index] === q.correct) {
+                    correctAnswers++;
+                }
+            });
+
+            const personalityScore = (correctAnswers / PERSONALITY_TEST.length) * 100;
+
+            const profile = {
+                id: Date.now(),
+                name,
+                whatsapp,
+                email,
+                location,
+                roles: [...selectedRoles],
+                skills,
+                experience,
+                cvFile,
+                videoFile,
+                personalityScore,
+                createdAt: new Date()
+            };
+
+            jobSeekers.push(profile);
+
+            document.getElementById('testSection').style.display = 'none';
+            document.getElementById('jobseekerSuccess').style.display = 'block';
+
+            updateStats();
+            updateAdminDashboard();
+
+            console.log('Job seeker profile created:', profile);
+        }
+
+        // ============================================
+        // EMPLOYER FUNCTIONALITY
+        // ============================================
+        
+        function toggleEmployerPreference(element, value) {
+            element.classList.toggle('selected');
+        }
+
+        function updateJobDescription() {
+            const role = document.getElementById('emp_role').value;
+            const descField = document.getElementById('emp_description');
+            
+            const descriptions = {
+                "Technology": "We're seeking a tech-savvy professional to join our innovative team.",
+                "Sales & Marketing": "Dynamic opportunity for a results-driven sales professional.",
+                "Administration": "Organized and detail-oriented administrative professional needed.",
+                "Design & Creative": "Creative talent wanted to bring our brand vision to life.",
+                "Agriculture": "Agricultural expert needed for our growing operations.",
+                "Healthcare": "Compassionate healthcare professional to join our medical team.",
+                "Education": "Passionate educator to inspire and teach students.",
+                "Hospitality": "Customer-focused professional for our hospitality operations.",
+                "Construction": "Skilled construction professional for ongoing projects.",
+                "Mining": "Mining industry professional with relevant experience."
+            };
+
+            if (role && descriptions[role]) {
+                descField.value = descriptions[role];
+            }
+        }
+
+        function postJobAndGetMatches() {
+            const company = document.getElementById('emp_company').value.trim();
+            const whatsapp = document.getElementById('emp_whatsapp').value.trim();
+            const email = document.getElementById('emp_email').value.trim();
+            const jobTitle = document.getElementById('emp_jobtitle').value.trim();
+            const roleCategory = document.getElementById('emp_role').value;
+            const description = document.getElementById('emp_description').value.trim();
+            
+            if (!company || !whatsapp || !email || !jobTitle || !roleCategory || !description) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Validate WhatsApp
+            if (whatsapp.length < 9) {
+                alert('Please enter a valid WhatsApp number');
+                return;
+            }
+
+            // Get preferences
+            const preferences = [];
+            document.querySelectorAll('.role-option.selected input[type="checkbox"]').forEach(input => {
+                preferences.push(input.value);
+            });
+
+            // Create job posting
+            const job = {
+                id: Date.now(),
+                company,
+                whatsapp,
+                email,
+                jobTitle,
+                roleCategory,
+                description,
+                preferences,
+                isLive: true,
+                postedAt: new Date()
+            };
+
+            postedJobs.push(job);
+
+            // Log search
+            employerSearchLog.push({
+                id: Date.now(),
+                company,
+                jobTitle,
+                roleCategory,
+                timestamp: new Date()
+            });
+
+            // Show success message
+            showModal('Job Posted Successfully!', `
+                <div class="success-message">
+                    <h3>🎉 Job is Now Live!</h3>
+                    <p><strong>${jobTitle}</strong> at <strong>${company}</strong> has been posted successfully.</p>
+                    <p style="margin-top: 15px;">
+                        📱 You will receive WhatsApp alerts at <strong>+263${whatsapp}</strong><br>
+                        📧 Email alerts will be sent to <strong>${email}</strong><br>
+                        when new matching candidates join the platform.
+                    </p>
+                    <p style="margin-top: 15px; padding: 15px; background: var(--light-gold); border-radius: 10px;">
+                        💡 <strong>Tip:</strong> You can pause this job anytime from your dashboard or the Job Board.
+                    </p>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="closeModal(); viewJobMatches()">
+                    View Matching Candidates Now
+                </button>
+            `);
+
+            updateStats();
+            updateAdminDashboard();
+            renderJobBoard();
+        }
+
+        function viewJobMatches() {
+            const job = postedJobs[postedJobs.length - 1]; // Most recent job
+            
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('candidatesList').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p style="color: var(--emerald); font-weight: 600; font-size: 16px;">🔍 AI is finding all matching candidates...</p>
+                </div>
+            `;
+
+            // Scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            setTimeout(() => {
+                const matches = enhancedMatchCandidates(job.roleCategory, job.company, job.jobTitle, job.preferences);
+                displayResults(matches, job.company, job.jobTitle);
+            }, 2000);
+        }
+
+        // ============================================
+        // ENHANCED MATCHING WITH UNLIMITED RESULTS
+        // ============================================
+        
+        function enhancedMatchCandidates(targetRoleCategory, company, jobTitle, preferences = []) {
+            if (jobSeekers.length === 0) {
+                return [];
+            }
+
+            // Map role categories to actual roles
+            const roleMapping = {
+                "Technology": ["Junior Developer", "Senior Developer", "Web Designer", "IT Support", "Network Administrator", "Data Analyst", "Software Engineer", "Mobile App Developer"],
+                "Sales & Marketing": ["Sales Representative", "Marketing Manager", "Business Development", "Account Manager", "Digital Marketer", "Brand Manager", "Sales Coordinator"],
+                "Administration": ["Admin Assistant", "Office Manager", "Receptionist", "Executive Assistant", "Data Entry Clerk", "Secretary", "Office Administrator"],
+                "Design & Creative": ["Graphic Designer", "Photographer", "Videographer", "UI/UX Designer", "Content Creator", "Copywriter"],
+                "Finance & Accounting": ["Accountant", "Bookkeeper", "Financial Analyst", "Auditor", "Payroll Officer", "Tax Consultant", "Finance Manager"],
+                "Healthcare": ["Nurse", "Pharmacist", "Medical Doctor", "Physiotherapist", "Lab Technician", "Healthcare Assistant", "Radiographer"],
+                "Education": ["Teacher", "Lecturer", "Teaching Assistant", "Education Coordinator", "School Administrator", "Tutor"],
+                "Hospitality": ["Hotel Manager", "Chef", "Waiter/Waitress", "Tour Guide", "Front Desk Officer", "Restaurant Manager", "Bartender"],
+                "Agriculture": ["Farm Manager", "Agricultural Officer", "Agronomist", "Livestock Manager", "Irrigation Specialist", "Farm Supervisor"],
+                "Construction": ["Civil Engineer", "Architect", "Quantity Surveyor", "Construction Manager", "Electrician", "Plumber", "Carpenter", "Site Supervisor"],
+                "Mining": ["Mining Engineer", "Geologist", "Mine Supervisor", "Safety Officer", "Plant Operator", "Drilling Operator"]
+            };
+
+            const targetRoles = roleMapping[targetRoleCategory] || [];
+            const requiredSkillsMap = {
+                "Technology": ["JavaScript", "HTML", "CSS", "Programming", "Technical"],
+                "Sales & Marketing": ["Communication", "Sales", "Negotiation", "CRM", "Marketing"],
+                "Administration": ["Microsoft Office", "Excel", "Organization", "Data Entry", "Communication"],
+                "Design & Creative": ["Photoshop", "Design", "Creativity", "Illustrator", "Figma"],
+                "Finance & Accounting": ["Accounting", "Excel", "Financial", "QuickBooks", "Tax"],
+                "Healthcare": ["Patient Care", "Medical", "First Aid", "Healthcare", "Empathy"],
+                "Education": ["Teaching", "Communication", "Student", "Education", "Patience"],
+                "Hospitality": ["Customer Service", "Hospitality", "Communication", "Service", "Management"],
+                "Agriculture": ["Agriculture", "Farming", "Livestock", "Crop", "Management"],
+                "Construction": ["Construction", "Engineering", "Building", "Safety", "Management"],
+                "Mining": ["Mining", "Geology", "Safety", "Operations", "Technical"]
+            };
+
+            const requiredSkills = (requiredSkillsMap[targetRoleCategory] || []).map(s => s.toLowerCase());
+
+            const scoredCandidates = jobSeekers.map(candidate => {
+                let score = 0;
+                let explanation = [];
+                
+                // Check if candidate has ANY role in the target category
+                const hasExplicitRole = candidate.roles.some(role => targetRoles.includes(role));
+
+                // Calculate skill matching
+                const candidateSkills = candidate.skills.map(s => s.toLowerCase());
+                const matchedSkills = requiredSkills.filter(req => 
+                    candidateSkills.some(cs => cs.includes(req) || req.includes(cs))
+                );
+                const skillScore = requiredSkills.length > 0 
+                    ? (matchedSkills.length / requiredSkills.length) * 100 
+                    : 50; // Default if no specific skills defined
+
+                // Cross-role threshold
+                const crossRoleThreshold = 40;
+                const isCrossRoleMatch = !hasExplicitRole && skillScore >= crossRoleThreshold;
+
+                if (!hasExplicitRole && skillScore < crossRoleThreshold) {
+                    return null; // Don't include
+                }
+
+                // Skill scoring
+                score += skillScore * 0.4;
+
+                if (isCrossRoleMatch) {
+                    explanation.push("🌟 Hidden Gem - Skills match even though different role category");
+                    score *= 0.90;
+                }
+
+                if (matchedSkills.length >= requiredSkills.length * 0.8) {
+                    explanation.push("Excellent skill match");
+                } else if (matchedSkills.length >= requiredSkills.length * 0.5) {
+                    explanation.push("Good skill match");
+                }
+
+                // Experience scoring
+                const expMap = {
+                    '0-1': 40,
+                    '1-3': 60,
+                    '3-5': 80,
+                    '5+': 100
+                };
+                const expScore = expMap[candidate.experience] || 50;
+                score += expScore * 0.3;
+
+                if (expScore >= 80) {
+                    explanation.push("Strong experience level");
+                }
+
+                // Personality score
+                score += candidate.personalityScore * 0.2;
+
+                if (candidate.personalityScore === 100) {
+                    explanation.push("Perfect personality assessment");
+                } else if (candidate.personalityScore >= 80) {
+                    explanation.push("Strong professional attributes");
+                }
+
+                // Video bonus
+                if (candidate.videoFile) {
+                    score += 10;
+                    explanation.push("Video introduction available");
+                }
+
+                // Preference bonuses
+                if (preferences.includes('trustworthy') && candidate.personalityScore >= 80) {
+                    score += 5;
+                }
+                if (preferences.includes('experienced') && (candidate.experience === '3-5' || candidate.experience === '5+')) {
+                    score += 5;
+                }
+                if (preferences.includes('energetic') && (candidate.experience === '0-1' || candidate.experience === '1-3')) {
+                    score += 5;
+                }
+
+                return {
+                    ...candidate,
+                    matchScore: Math.min(Math.round(score), 100),
+                    matchedSkills,
+                    missingSkills: requiredSkills.filter(req => !matchedSkills.includes(req)),
+                    skillScore: Math.round(skillScore),
+                    expScore: Math.round(expScore),
+                    explanation: explanation.join(". ") + ".",
+                    isCrossRoleMatch,
+                    company,
+                    jobTitle
+                };
+            }).filter(c => c !== null);
+
+            // Sort and mark top 5 as premium
+            const sorted = scoredCandidates.sort((a, b) => b.matchScore - a.matchScore);
+            sorted.forEach((candidate, index) => {
+                candidate.isPremiumMatch = index < 5;
+            });
+
+            return sorted; // Return ALL matches, not just top 5
+        }
+
+        // ============================================
+        // RESULTS DISPLAY - UNLIMITED
+        // ============================================
+        
+        function displayResults(candidates, company, jobTitle) {
+            const container = document.getElementById('candidatesList');
+
+            if (candidates.length === 0) {
+                container.innerHTML = `
+                    <div class="form-container" style="text-align: center; padding: 60px 40px;">
+                        <h3 style="color: #dc2626; margin-bottom: 20px; font-weight: 700;">No Candidates Found</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 16px;">
+                            No candidates match this role category yet. Check back soon!
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            const premiumCount = candidates.filter(c => c.isPremiumMatch).length;
+            const otherCount = candidates.length - premiumCount;
+
+            if (premiumCount > 0) {
+                html += `
+                    <div style="background: linear-gradient(135deg, var(--light-gold) 0%, #fef9e7 100%); padding: 25px; border-radius: 20px; margin-bottom: 30px; border-left: 5px solid var(--gold);">
+                        <h3 style="color: var(--charcoal); margin-bottom: 10px;">⭐ Top ${premiumCount} Premium Matches</h3>
+                        <p style="color: var(--text-muted);">These candidates have the highest match scores and are your best fit.</p>
+                    </div>
+                `;
+            }
+
+            candidates.forEach((candidate, index) => {
+                // Show separator between premium and other matches
+                if (index === 5 && otherCount > 0) {
+                    html += `
+                        <div style="background: white; padding: 20px; border-radius: 20px; margin: 30px 0; text-align: center; border: 2px dashed rgba(4, 120, 87, 0.2);">
+                            <h4 style="color: var(--emerald); margin-bottom: 10px;">Additional ${otherCount} Matching Candidates</h4>
+                            <p style="color: var(--text-muted); font-size: 14px;">All candidates below meet your requirements with direct WhatsApp contact</p>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="candidate-card ${candidate.isPremiumMatch ? 'premium-match' : ''}">
+                        ${candidate.isPremiumMatch ? '<div class="premium-badge">⭐ PREMIUM MATCH</div>' : ''}
+                        
+                        <div class="candidate-header">
+                            <div class="candidate-info">
+                                <h3>${candidate.name}</h3>
+                                <p>📍 ${candidate.location} | 📧 ${candidate.email}</p>
+                                <p style="color: var(--emerald); font-weight: 600; margin-top: 8px;">
+                                    Roles: ${candidate.roles.slice(0, 3).join(', ')}${candidate.roles.length > 3 ? '...' : ''}
+                                </p>
+                                ${candidate.isCrossRoleMatch ? '<span class="hidden-gem-badge">✨ HIDDEN GEM - Cross-Role Match</span>' : ''}
+                            </div>
+                            <div class="match-score">
+                                <div class="score-circle">${candidate.matchScore}</div>
+                                <div class="score-label">Match Score</div>
+                            </div>
+                        </div>
+
+                        <div class="explanation">
+                            <strong>Why ranked #${index + 1}:</strong> ${candidate.explanation}
+                        </div>
+
+                        <div style="margin: 25px 0;">
+                            <div class="detail-row">
+                                <strong>Skill Match:</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${candidate.skillScore}%"></div>
+                                </div>
+                                <span style="font-weight: 700; color: var(--emerald);">${candidate.skillScore}%</span>
+                            </div>
+
+                            <div class="detail-row">
+                                <strong>Experience:</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${candidate.expScore}%"></div>
+                                </div>
+                                <span style="font-weight: 700;">${candidate.experience} years</span>
+                            </div>
+
+                            <div class="detail-row">
+                                <strong>Personality:</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${candidate.personalityScore}%"></div>
+                                </div>
+                                <span style="font-weight: 700; color: var(--emerald);">${Math.round(candidate.personalityScore)}%</span>
+                            </div>
+                        </div>
+
+                        <div style="margin: 25px 0;">
+                            <strong style="display: block; margin-bottom: 12px;">Skills:</strong>
+                            <div class="skills-match">
+                                ${candidate.skills.slice(0, 8).map(skill => 
+                                    `<span class="skill-tag skill-matched">✓ ${skill}</span>`
+                                ).join('')}
+                                ${candidate.skills.length > 8 ? `<span class="skill-tag skill-matched">+${candidate.skills.length - 8} more</span>` : ''}
+                            </div>
+                        </div>
+
+                        <div style="margin: 20px 0; padding: 15px; background: white; border-radius: 12px; border: 2px solid rgba(4, 120, 87, 0.1);">
+                            <strong>Documents:</strong><br>
+                            📄 CV: ${candidate.cvFile}
+                            ${candidate.videoFile ? `<br>🎥 Video: ${candidate.videoFile} <span style="color: var(--emerald); font-weight: 600;">⭐ 4x Response!</span>` : '<br><em style="color: var(--text-muted);">No video intro</em>'}
+                        </div>
+
+                        <div class="action-buttons">
+                            <a href="https://wa.me/263${candidate.whatsapp}?text=Hi%20${encodeURIComponent(candidate.name)}!%20I%20found%20your%20profile%20on%20ZimGetHired%20for%20${encodeURIComponent(jobTitle)}%20at%20${encodeURIComponent(company)}.%20Are%20you%20available%20for%20an%20interview?" 
+                               target="_blank" 
+                               class="whatsapp-btn">
+                                <span style="font-size: 20px;">📱</span> Contact on WhatsApp: +263${candidate.whatsapp}
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ============================================
+        // JOB BOARD
+        // ============================================
+        
+        function renderJobBoard() {
+            const container = document.getElementById('jobBoardContainer');
+
+            if (postedJobs.length === 0) {
+                container.innerHTML = `
+                    <div class="form-container" style="text-align: center; padding: 60px 40px; grid-column: 1 / -1;">
+                        <h3 style="color: var(--text-muted); margin-bottom: 20px;">No Jobs Posted Yet</h3>
+                        <p style="color: var(--text-muted);">Check back soon for new opportunities!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = postedJobs.map(job => `
+                <div class="job-card ${!job.isLive ? 'inactive' : ''}">
+                    <span class="job-status-badge ${job.isLive ? 'job-status-live' : 'job-status-paused'}">
+                        ${job.isLive ? '🟢 LIVE' : '⏸️ PAUSED'}
+                    </span>
+                    
+                    <h3 style="color: var(--emerald); margin-bottom: 10px; font-weight: 700;">${job.jobTitle}</h3>
+                    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">
+                        <strong>${job.company}</strong> • ${job.roleCategory}
+                    </p>
+                    
+                    <p style="color: var(--text-dark); margin-bottom: 20px; line-height: 1.6;">
+                        ${job.description}
+                    </p>
+
+                    <div style="padding-top: 15px; border-top: 1px solid rgba(4, 120, 87, 0.1); font-size: 13px; color: var(--text-muted);">
+                        📅 Posted ${new Date(job.postedAt).toLocaleDateString()}
+                    </div>
+
+                    ${job.isLive ? `
+                        <button class="btn btn-primary btn-block" onclick="applyToJob(${job.id})" style="margin-top: 15px;">
+                            Apply Now
+                        </button>
+                    ` : `
+                        <button class="btn btn-block" disabled style="margin-top: 15px; opacity: 0.5; cursor: not-allowed; background: #ccc;">
+                            Job Currently Paused
+                        </button>
+                    `}
+
+                    <div style="margin-top: 15px; text-align: center;">
+                        <button class="job-manage-btn ${job.isLive ? 'pause' : 'activate'}" onclick="toggleJobStatus(${job.id})">
+                            ${job.isLive ? '⏸️ Pause Job' : '▶️ Activate Job'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleJobStatus(jobId) {
+            const job = postedJobs.find(j => j.id === jobId);
+            if (job) {
+                job.isLive = !job.isLive;
+                renderJobBoard();
+                updateStats();
+                alert(`Job "${job.jobTitle}" is now ${job.isLive ? 'LIVE' : 'PAUSED'}`);
+            }
+        }
+
+        function applyToJob(jobId) {
+            const job = postedJobs.find(j => j.id === jobId);
+            if (!job) return;
+
+            // Check if user is logged in (has created profile)
+            // For demo, we'll assume they can apply
+            
+            showModal('Apply to Job', `
+                <div class="form-container">
+                    <h3 style="color: var(--emerald); margin-bottom: 15px;">Apply to ${job.jobTitle}</h3>
+                    <p style="margin-bottom: 20px;">at <strong>${job.company}</strong></p>
+
+                    <p style="padding: 20px; background: var(--light-gold); border-radius: 12px; margin-bottom: 20px;">
+                        💡 <strong>Quick Apply:</strong> If you've already created a profile, your information will be sent automatically with your match score.
+                    </p>
+
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" id="apply_name" placeholder="Full Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>WhatsApp Number *</label>
+                        <div class="whatsapp-input-group">
+                            <div class="whatsapp-prefix">+263</div>
+                            <input type="tel" id="apply_whatsapp" class="whatsapp-input" placeholder="77 123 4567" maxlength="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="apply_email" placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Brief Message (Optional)</label>
+                        <textarea id="apply_message" placeholder="Why are you a good fit for this role?" rows="4"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" onclick="submitApplication(${jobId})">
+                        Submit Application
+                    </button>
+                </div>
+            `);
+        }
+
+        function submitApplication(jobId) {
+            const name = document.getElementById('apply_name').value.trim();
+            const whatsapp = document.getElementById('apply_whatsapp').value.trim();
+            const email = document.getElementById('apply_email').value.trim();
+            const message = document.getElementById('apply_message').value.trim();
+
+            if (!name || !whatsapp || !email) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const job = postedJobs.find(j => j.id === jobId);
+            
+            // Find if applicant has a profile
+            const applicantProfile = jobSeekers.find(js => 
+                js.email === email || js.whatsapp === whatsapp
+            );
+
+            let matchScore = 0;
+            if (applicantProfile) {
+                // Calculate match score
+                const matches = enhancedMatchCandidates(job.roleCategory, job.company, job.jobTitle, job.preferences);
+                const match = matches.find(m => m.id === applicantProfile.id);
+                matchScore = match ? match.matchScore : 0;
+            }
+
+            const application = {
+                id: Date.now(),
+                jobId,
+                jobTitle: job.jobTitle,
+                company: job.company,
+                applicantName: name,
+                applicantWhatsapp: whatsapp,
+                applicantEmail: email,
+                message,
+                matchScore,
+                hasProfile: !!applicantProfile,
+                appliedAt: new Date()
+            };
+
+            applicationLog.push(application);
+
+            showModal('Application Submitted!', `
+                <div class="success-message">
+                    <h3>✅ Application Sent Successfully!</h3>
+                    <p>Your application for <strong>${job.jobTitle}</strong> at <strong>${job.company}</strong> has been submitted.</p>
+                    ${matchScore > 0 ? `
+                        <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 12px;">
+                            <div style="text-align: center;">
+                                <div class="score-circle" style="margin: 0 auto 10px;">${matchScore}</div>
+                                <p style="color: var(--emerald); font-weight: 600;">Your Match Score</p>
+                            </div>
+                        </div>
+                    ` : ''}
+                    <p style="margin-top: 15px;">The employer will contact you at <strong>+263${whatsapp}</strong> if interested.</p>
+                </div>
+            `);
+
+            updateStats();
+            updateAdminDashboard();
+        }
+
+        // ============================================
+        // ADMIN DASHBOARD
+        // ============================================
+        
+        function updateAdminDashboard() {
+            // Update statistics
+            document.getElementById('admin_total_seekers').textContent = jobSeekers.length;
+            document.getElementById('admin_total_jobs').textContent = postedJobs.length;
+            document.getElementById('admin_total_searches').textContent = employerSearchLog.length;
+            document.getElementById('admin_total_applications').textContent = applicationLog.length;
+
+            // Job Seekers Table
+            const seekersTable = document.getElementById('adminJobSeekersTable');
+            seekersTable.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>WhatsApp</th>
+                            <th>Email</th>
+                            <th>Roles</th>
+                            <th>Experience</th>
+                            <th>Personality</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${jobSeekers.map(js => `
+                            <tr>
+                                <td><strong>${js.name}</strong></td>
+                                <td>${js.location}</td>
+                                <td>+263${js.whatsapp}</td>
+                                <td>${js.email}</td>
+                                <td>${js.roles.slice(0, 2).join(', ')}${js.roles.length > 2 ? '...' : ''}</td>
+                                <td>${js.experience} years</td>
+                                <td>${Math.round(js.personalityScore)}%</td>
+                                <td>${new Date(js.createdAt).toLocaleDateString()}</td>
+                                <td>
+                                    <button class="btn-danger" style="padding: 6px 12px; font-size: 12px;" onclick="deleteJobSeeker(${js.id})">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            // Posted Jobs Table
+            const jobsTable = document.getElementById('adminJobsTable');
+            jobsTable.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>WhatsApp</th>
+                            <th>Email</th>
+                            <th>Posted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${postedJobs.map(job => `
+                            <tr>
+                                <td><strong>${job.jobTitle}</strong></td>
+                                <td>${job.company}</td>
+                                <td>${job.roleCategory}</td>
+                                <td><span style="color: ${job.isLive ? '#10b981' : '#f59e0b'}; font-weight: 600;">${job.isLive ? 'LIVE' : 'PAUSED'}</span></td>
+                                <td>+263${job.whatsapp}</td>
+                                <td>${job.email}</td>
+                                <td>${new Date(job.postedAt).toLocaleDateString()}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            // Search Log Table
+            const searchLogTable = document.getElementById('adminSearchLogTable');
+            searchLogTable.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>Category</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${employerSearchLog.slice(-10).reverse().map(log => `
+                            <tr>
+                                <td><strong>${log.company}</strong></td>
+                                <td>${log.jobTitle}</td>
+                                <td>${log.roleCategory}</td>
+                                <td>${new Date(log.timestamp).toLocaleString()}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function deleteJobSeeker(id) {
+            if (confirm('Are you sure you want to delete this job seeker profile?')) {
+                jobSeekers = jobSeekers.filter(js => js.id !== id);
+                updateAdminDashboard();
+                updateStats();
+                alert('Profile deleted successfully');
+            }
+        }
+
+        // ============================================
+        // STATS & UTILITIES
+        // ============================================
+        
+        function updateStats() {
+            document.getElementById('stat-seekers').textContent = jobSeekers.length;
+            document.getElementById('stat-jobs').textContent = postedJobs.filter(j => j.isLive).length;
+            document.getElementById('stat-matches').textContent = employerSearchLog.length + applicationLog.length;
+        }
+
+        function showModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = content;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        
+        window.onload = function() {
+            initializeApp();
+        };
+    </script>
+</body>
+</html>
