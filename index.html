@@ -1116,6 +1116,251 @@
             color: var(--emerald);
             font-weight: 700;
         }
+		/* News Cards */
+        .news-section {
+            margin: 60px 0;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .news-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .news-card h4 {
+            color: var(--emerald);
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .news-card .news-excerpt {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .news-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--emerald);
+            color: white;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* Salary Benchmark */
+        .salary-benchmark {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            margin: 60px 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .salary-search {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 20px;
+            border: 2px solid rgba(4, 120, 87, 0.2);
+            border-radius: 15px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            margin: 20px 0;
+        }
+
+        .salary-table {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+        }
+
+        .salary-table th {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .salary-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(4, 120, 87, 0.1);
+        }
+
+        .salary-table tr:hover {
+            background: rgba(4, 120, 87, 0.05);
+        }
+
+        /* CV Resource Center */
+        .cv-resource-center {
+            margin: 60px 0;
+        }
+
+        .cv-tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .cv-tip-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid rgba(4, 120, 87, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cv-tip-card:hover {
+            border-color: var(--emerald);
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.15);
+        }
+
+        .cv-tip-card h4 {
+            color: var(--emerald);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        /* Data Saver Toggle */
+        .data-saver-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--charcoal);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 99;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+
+        .data-saver-toggle:hover {
+            background: var(--emerald);
+            transform: scale(1.05);
+        }
+
+        /* Virtual Job Fair */
+        .job-fair-indicator {
+            position: fixed;
+            bottom: 250px;
+            right: 20px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            z-index: 98;
+            cursor: pointer;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .job-fair-indicator::before {
+            content: '🔴';
+            margin-right: 8px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.5; }
+        }
+
+        /* Data Saver Mode */
+        body.data-saver-mode {
+            background: #f9fafb;
+        }
+
+        body.data-saver-mode .hero,
+        body.data-saver-mode .value-card,
+        body.data-saver-mode .candidate-card {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        body.data-saver-mode .hero::before {
+            display: none;
+        }
+
+        body.data-saver-mode::before {
+            display: none;
+        }
+
+        body.data-saver-mode .hero {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--deep-emerald) 100%);
+        }
+
+        /* Verified Badge */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        /* Interview Scheduler */
+        .interview-scheduler {
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--light-gold) 0%, #fef9e7 100%);
+            border-radius: 15px;
+            border-left: 5px solid var(--gold);
+        }
+
+        .scheduler-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .scheduler-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid,
+            .cv-tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-saver-toggle,
+            .job-fair-indicator {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1178,7 +1423,189 @@
                     </ul>
                 </div>
             </div>
-        </section>
+        <!-- ZIM MARKET PULSE (NEWS SECTION) -->
+            <div class="news-section">
+                <div class="form-container">
+                    <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">📰 Zim Market Pulse</h2>
+                    <p style="color: var(--text-muted);">Stay informed about Zimbabwe's economy and job market trends</p>
+                </div>
+
+                <div class="news-grid">
+                    <div class="news-card" onclick="showNewsArticle('econet')">
+                        <span class="news-tag">TELECOM</span>
+                        <h4>Econet InfraCo Expands Fiber Network</h4>
+                        <p class="news-excerpt">Zimbabwe's largest telecom operator is rolling out fiber infrastructure across major cities, creating hundreds of technical jobs...</p>
+                        <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">Read Full Article →</button>
+                    </div>
+
+                    <div class="news-card" onclick="showNewsArticle('lithium')">
+                        <span class="news-tag">MINING</span>
+                        <h4>Lithium Mining Boom Creates 5,000+ Jobs</h4>
+                        <p class="news-excerpt">Zimbabwe's lithium sector is experiencing unprecedented growth with new mines opening in Goromonzi and Mutoko regions...</p>
+                        <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">Read Full Article →</button>
+                    </div>
+
+                    <div class="news-card" onclick="showNewsArticle('tobacco')">
+                        <span class="news-tag">AGRICULTURE</span>
+                        <h4>Record Tobacco Season Opens Strong</h4>
+                        <p class="news-excerpt">Zimbabwe's tobacco marketing season has opened with record volumes, signaling strong demand for agricultural workers and logistics staff...</p>
+                        <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">Read Full Article →</button>
+                    </div>
+
+                    <div class="news-card" onclick="showNewsArticle('gdp')">
+                        <span class="news-tag">ECONOMY</span>
+                        <h4>Zimbabwe GDP Growth Hits 8.5%</h4>
+                        <p class="news-excerpt">The IMF projects Zimbabwe's economy to grow by 8.5% in 2026, driven by mining, agriculture, and tourism sectors...</p>
+                        <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">Read Full Article →</button>
+                    </div>
+
+                    <div class="news-card" onclick="showNewsArticle('vicfalls')">
+                        <span class="news-tag">TECH HUB</span>
+                        <h4>Victoria Falls Tech Hub Launches</h4>
+                        <p class="news-excerpt">A new technology innovation hub in Victoria Falls aims to attract digital nomads and create 200+ tech jobs in the tourism capital...</p>
+                        <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">Read Full Article →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SALARY BENCHMARK TOOL -->
+            <div class="salary-benchmark">
+                <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">💰 Salary Benchmark Tool</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Compare average monthly salaries across major cities</p>
+                
+                <input type="text" id="salarySearch" class="salary-search" placeholder="🔍 Search by role (e.g., 'Developer', 'Sales')..." onkeyup="filterSalaryTable()">
+
+                <div style="overflow-x: auto;">
+                    <table class="salary-table" id="salaryTable">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Harare (USD)</th>
+                                <th>Bulawayo (USD)</th>
+                                <th>Experience Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Junior Developer</strong></td>
+                                <td>$450 - $750</td>
+                                <td>$400 - $650</td>
+                                <td>0-2 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Senior Developer</strong></td>
+                                <td>$1,200 - $2,000</td>
+                                <td>$1,000 - $1,700</td>
+                                <td>5+ years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sales Representative</strong></td>
+                                <td>$350 - $600 + Commission</td>
+                                <td>$300 - $550 + Commission</td>
+                                <td>1-3 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Marketing Manager</strong></td>
+                                <td>$800 - $1,400</td>
+                                <td>$700 - $1,200</td>
+                                <td>3-5 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin Assistant</strong></td>
+                                <td>$280 - $450</td>
+                                <td>$250 - $400</td>
+                                <td>0-2 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Accountant</strong></td>
+                                <td>$600 - $1,000</td>
+                                <td>$550 - $900</td>
+                                <td>3-5 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Graphic Designer</strong></td>
+                                <td>$400 - $700</td>
+                                <td>$350 - $600</td>
+                                <td>1-3 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HR Manager</strong></td>
+                                <td>$750 - $1,300</td>
+                                <td>$650 - $1,100</td>
+                                <td>5+ years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Teacher</strong></td>
+                                <td>$350 - $600</td>
+                                <td>$320 - $550</td>
+                                <td>2-5 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nurse</strong></td>
+                                <td>$400 - $700</td>
+                                <td>$380 - $650</td>
+                                <td>2-5 years</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PERFECT CV RESOURCE CENTER -->
+            <div class="cv-resource-center">
+                <div class="form-container">
+                    <h2 style="color: var(--emerald); margin-bottom: 15px; font-weight: 700;">📄 Perfect CV Resource Center</h2>
+                    <p style="color: var(--text-muted);">Tools and tips to create a winning CV for the Zimbabwean job market</p>
+                </div>
+
+                <div class="cv-tips-grid">
+                    <div class="cv-tip-card">
+                        <h4>🎯 The STAR Method</h4>
+                        <p style="color: var(--text-muted); margin-bottom: 15px; line-height: 1.7;">
+                            <strong style="color: var(--emerald);">S</strong>ituation: Set the context<br>
+                            <strong style="color: var(--emerald);">T</strong>ask: Describe your responsibility<br>
+                            <strong style="color: var(--emerald);">A</strong>ction: Explain what you did<br>
+                            <strong style="color: var(--emerald);">R</strong>esult: Share the outcome
+                        </p>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            Example: "Increased sales by 35% in Q3 2025 by implementing a new customer follow-up system using WhatsApp Business."
+                        </p>
+                    </div>
+
+                    <div class="cv-tip-card">
+                        <h4>📥 Download CV Template</h4>
+                        <p style="color: var(--text-muted); margin-bottom: 15px;">
+                            Get our professionally designed CV template tailored for Zimbabwean employers.
+                        </p>
+                        <button class="btn btn-primary" style="padding: 10px 20px; font-size: 13px;" onclick="downloadCVTemplate()">
+                            Download Template (.docx)
+                        </button>
+                    </div>
+
+                    <div class="cv-tip-card">
+                        <h4>📱 WhatsApp CV Tips</h4>
+                        <p style="color: var(--text-muted); line-height: 1.7; font-size: 14px;">
+                            ✓ Use a professional WhatsApp DP<br>
+                            ✓ Keep your status updated with job-seeking intent<br>
+                            ✓ Respond to employers within 2 hours<br>
+                            ✓ Send CV as PDF, not Word doc<br>
+                            ✓ Include a brief intro message
+                        </p>
+                    </div>
+
+                    <div class="cv-tip-card">
+                        <h4>⚠️ Common CV Mistakes</h4>
+                        <p style="color: var(--text-muted); line-height: 1.7; font-size: 14px;">
+                            ✗ Using unprofessional email addresses<br>
+                            ✗ Including photo (unless requested)<br>
+                            ✗ Listing duties instead of achievements<br>
+                            ✗ Generic objective statements<br>
+                            ✗ Spelling/grammar errors
+                        </p>
+                    </div>
+                </div>
+            </div>
+		</section>
 
         <!-- JOB BOARD SECTION -->
         <section id="jobboard" class="section">
@@ -1487,7 +1914,17 @@
         </section>
     </main>
 
-    <!-- Platform Stats Pulse -->
+    <!-- Data Saver Toggle -->
+    <div class="data-saver-toggle" onclick="toggleDataSaver()">
+        📱 Data Saver: <span id="dataSaverStatus">OFF</span>
+    </div>
+
+    <!-- Virtual Job Fair Indicator -->
+    <div class="job-fair-indicator" onclick="showJobFair()">
+        <strong>LIVE NOW</strong><br>
+        <small>Virtual Job Fair</small>
+    </div>
+	<!-- Platform Stats Pulse -->
     <div class="stats-pulse">
         <h4>🔥 Live Stats</h4>
         <div class="stat-row">
@@ -1652,12 +2089,6 @@
         }
 
         const storage = new PersistentStorage();
-		// Sync global variables with storage on page load
-        jobSeekers = storage.jobSeekers;
-        postedJobs = storage.postedJobs;
-        employerSearchLog = storage.employerSearchLog;
-        applicationLog = storage.applicationLog;
-        employerWatchlist = storage.employerWatchlist || [];
         
         // ============================================
         // DATA STRUCTURES (Legacy support)
