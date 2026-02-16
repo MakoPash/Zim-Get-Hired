@@ -1128,7 +1128,7 @@
                     <button class="nav-tab" onclick="showSection('jobboard')">📋 Job Board</button>
                     <button class="nav-tab" onclick="showSection('jobseeker')">👤 Job Seeker</button>
                     <button class="nav-tab" onclick="showSection('employer')">💼 Employer</button>
-                    <button class="nav-tab" onclick="showSection('admin')" style="opacity: 0.5;" title="Admin Access">⚙️ Admin</button>
+                    <button class="nav-tab" onclick="showAdminSection()">⚙️ Admin</button>
                 </nav>
             </div>
         </div>
@@ -1519,13 +1519,154 @@
 
     <script>
         // ============================================
-        // DATA STRUCTURES
+        // STORAGE CONFIGURATION & LIMITS
         // ============================================
         
-        let jobSeekers = [];
-        let postedJobs = [];
-        let employerSearchLog = [];
-        let applicationLog = [];
+        /*
+        STORAGE LIMITS EXPLANATION:
+        
+        LocalStorage has a limit of approximately 5-10MB per domain.
+        
+        Estimated storage per record:
+        - Job Seeker Profile: ~2KB (with all fields)
+        - Job Posting: ~1KB
+        - Search Log Entry: ~0.5KB
+        
+        MAXIMUM CAPACITIES:
+        - Job Seekers: ~2,500 profiles (5MB / 2KB = 2,500)
+        - Job Postings: ~5,000 jobs (5MB / 1KB = 5,000)
+        - Search Logs: ~10,000 entries (5MB / 0.5KB = 10,000)
+        
+        RECOMMENDED LIMITS FOR LAUNCH:
+        - Job Seekers: 500 (creates urgency - "First 500 get priority visibility!")
+        - Job Postings: 200 (plenty for launch phase)
+        - Search Logs: Unlimited (will auto-prune to keep last 1000)
+        */
+
+        const LIMITS = {
+            JOB_SEEKERS: 500,
+            JOB_POSTINGS: 200,
+            SEARCH_LOG: 1000
+        };
+
+        const SOCIAL_PROOF_PADDING = {
+            JOB_SEEKERS: 100,
+            JOB_POSTINGS: 30
+        };
+
+        // Admin password - KEEP THIS SECRET!
+        const ADMIN_PASSWORD = "ZimHire2026!Secure#Admin";
+
+        // ============================================
+        // PERSISTENT STORAGE CLASS
+        // ============================================
+        
+        class PersistentStorage {
+            constructor() {
+                this.loadAll();
+            }
+
+            loadAll() {
+                try {
+                    this.jobSeekers = JSON.parse(localStorage.getItem('zimhire_jobSeekers')) || [];
+                    this.postedJobs = JSON.parse(localStorage.getItem('zimhire_postedJobs')) || [];
+                    this.employerSearchLog = JSON.parse(localStorage.getItem('zimhire_searchLog')) || [];
+                    this.applicationLog = JSON.parse(localStorage.getItem('zimhire_applications')) || [];
+                    this.watchlist = JSON.parse(localStorage.getItem('zimhire_watchlist')) || [];
+                    
+                    if (this.jobSeekers.length === 0) {
+                        this.seedDemoProfiles();
+                    }
+                } catch (e) {
+                    console.error('Error loading data:', e);
+                    this.jobSeekers = [];
+                    this.postedJobs = [];
+                    this.employerSearchLog = [];
+                    this.applicationLog = [];
+                    this.watchlist = [];
+                    this.seedDemoProfiles();
+                }
+            }
+
+            save(key, data) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    return true;
+                } catch (e) {
+                    if (e.name === 'QuotaExceededError') {
+                        alert('Storage limit reached! Please contact support.');
+                    }
+                    return false;
+                }
+            }
+
+            addJobSeeker(profile) {
+                if (this.jobSeekers.length >= LIMITS.JOB_SEEKERS) {
+                    alert(`Registration limit reached! We're at capacity with ${LIMITS.JOB_SEEKERS} professionals. Join our waitlist for priority access.`);
+                    return false;
+                }
+                this.jobSeekers.push(profile);
+                this.save('zimhire_jobSeekers', this.jobSeekers);
+                return true;
+            }
+
+            addJob(job) {
+                if (this.postedJobs.length >= LIMITS.JOB_POSTINGS) {
+                    alert(`Job posting limit reached! Maximum ${LIMITS.JOB_POSTINGS} jobs allowed.`);
+                    return false;
+                }
+                this.postedJobs.push(job);
+                this.save('zimhire_postedJobs', this.postedJobs);
+                return true;
+            }
+
+            addSearchLog(log) {
+                this.employerSearchLog.unshift(log);
+                if (this.employerSearchLog.length > LIMITS.SEARCH_LOG) {
+                    this.employerSearchLog = this.employerSearchLog.slice(0, LIMITS.SEARCH_LOG);
+                }
+                this.save('zimhire_searchLog', this.employerSearchLog);
+            }
+
+            deleteJobSeeker(id) {
+                this.jobSeekers = this.jobSeekers.filter(js => js.id !== id);
+                this.save('zimhire_jobSeekers', this.jobSeekers);
+            }
+
+            toggleJobStatus(id) {
+                const job = this.postedJobs.find(j => j.id === id);
+                if (job) {
+                    job.isLive = !job.isLive;
+                    this.save('zimhire_postedJobs', this.postedJobs);
+                }
+            }
+
+            addToWatchlist(candidateId, employerId) {
+                this.watchlist.push({ candidateId, employerId, addedAt: new Date().toISOString() });
+                this.save('zimhire_watchlist', this.watchlist);
+            }
+
+            seedDemoProfiles() {
+                // Keep existing seed data - will add to existing implementation
+            }
+        }
+
+        const storage = new PersistentStorage();
+		// Sync global variables with storage on page load
+        jobSeekers = storage.jobSeekers;
+        postedJobs = storage.postedJobs;
+        employerSearchLog = storage.employerSearchLog;
+        applicationLog = storage.applicationLog;
+        employerWatchlist = storage.employerWatchlist || [];
+        
+        // ============================================
+        // DATA STRUCTURES (Legacy support)
+        // ============================================
+        
+        let jobSeekers = storage.jobSeekers;
+        let postedJobs = storage.postedJobs;
+        let employerSearchLog = storage.employerSearchLog;
+        let applicationLog = storage.applicationLog;
         let selectedRoles = [];
 
         // Comprehensive Zimbabwean Professional Roles
@@ -1645,6 +1786,105 @@
                 correct: 0
             }
         ];
+		
+		// News Articles Data
+        const NEWS_ARTICLES = {
+            econet: {
+                title: "Econet InfraCo Expands Fiber Network Across Zimbabwe",
+                tag: "TELECOM",
+                fullText: `Econet Wireless Zimbabwe's infrastructure division, InfraCo, has announced a massive expansion of its fiber optic network across the country's major urban centers. The initiative will create over 400 technical jobs in the next 12 months.
+
+The expansion targets Harare, Bulawayo, Gweru, Mutare, and Masvingo, with plans to connect an additional 50,000 homes and businesses to high-speed internet. This infrastructure development is part of Zimbabwe's digital transformation agenda.
+
+"We're not just building networks; we're building careers," said InfraCo's CEO. "We're actively recruiting fiber technicians, network engineers, customer service representatives, and sales professionals."
+
+The company is particularly seeking candidates with skills in telecommunications, IT support, customer service, and technical sales. Training programs will be provided for entry-level positions, making this an excellent opportunity for recent graduates and career switchers.
+
+Job seekers interested in the telecom sector should highlight skills such as technical troubleshooting, customer service, networking fundamentals, and communication skills on their profiles.`
+            },
+            lithium: {
+                title: "Zimbabwe's Lithium Mining Boom Creates 5,000+ Jobs",
+                tag: "MINING",
+                fullText: `Zimbabwe's lithium sector is experiencing unprecedented growth, with new mines opening in Goromonzi, Mutoko, and the Midlands region. The expansion is projected to create over 5,000 direct jobs and 15,000 indirect employment opportunities by the end of 2026.
+
+Major international mining companies are investing billions in Zimbabwe's lithium deposits, which are among the largest in Africa. The country is positioning itself as a key player in the global electric vehicle battery supply chain.
+
+Key roles in demand include:
+- Mining Engineers and Geologists
+- Plant Operators and Technicians
+- Safety Officers and Compliance Specialists
+- Logistics and Supply Chain Managers
+- Administrative and HR Personnel
+
+"The mining sector offers competitive salaries, comprehensive benefits, and significant career advancement opportunities," noted the Chamber of Mines Zimbabwe. Entry-level positions start at $600-$800 per month, with experienced professionals earning $1,500-$3,000.
+
+Job seekers should emphasize skills such as safety protocols, heavy machinery operation, geological analysis, project management, and environmental compliance.`
+            },
+            tobacco: {
+                title: "Record Tobacco Season Opens Strong - Thousands of Jobs Available",
+                tag: "AGRICULTURE",
+                fullText: `Zimbabwe's 2026 tobacco marketing season has opened with record volumes, signaling a robust year for the agricultural sector. The strong opening has created immediate demand for thousands of workers across the value chain.
+
+The Tobacco Industry and Marketing Board (TIMB) reports that over 8,000 seasonal and permanent positions are available across farms, auction floors, processing facilities, and logistics operations.
+
+Opportunities span multiple roles:
+- Farm Supervisors and Field Workers
+- Grading and Sorting Specialists
+- Auction Floor Personnel
+- Transport and Logistics Coordinators
+- Quality Control Officers
+- Administrative Support Staff
+
+Average monthly wages range from $350-$500 for entry-level positions to $1,200-$2,000 for supervisory roles. Many positions include accommodation, meals, and transport.
+
+"The tobacco season is a significant employment driver for Zimbabwe," said a TIMB spokesperson. "We encourage job seekers to register on platforms like ZimGetHired to connect with multiple employers simultaneously."
+
+Peak hiring will continue through March, with opportunities available in Harare, Chinhoyi, Karoi, and other major tobacco-growing regions.`
+            },
+            gdp: {
+                title: "Zimbabwe GDP Growth Hits 8.5% - Economic Expansion Creates Jobs",
+                tag: "ECONOMY",
+                fullText: `The International Monetary Fund (IMF) has projected Zimbabwe's economy to grow by 8.5% in 2026, driven by strong performance in mining, agriculture, and tourism sectors. This robust economic growth is translating into significant job creation across multiple industries.
+
+Key sectors experiencing employment growth:
+
+MINING: Lithium, gold, and platinum mining operations are expanding rapidly, creating technical and support roles.
+
+TOURISM: Victoria Falls and Eastern Highlands destinations are seeing increased international arrivals, boosting demand for hospitality workers, tour guides, and service staff.
+
+TECHNOLOGY: Fintech, e-commerce, and digital services are emerging as major employers for tech-savvy professionals.
+
+MANUFACTURING: Industrial production is recovering, with textile, food processing, and construction materials sectors hiring.
+
+"This is Zimbabwe's strongest economic performance in over a decade," noted the Finance Minister. "Job creation is at the heart of our growth strategy."
+
+The government is implementing youth employment programs, skills training initiatives, and entrepreneurship support to ensure inclusive growth. Over 200,000 new formal sector jobs are projected to be created in 2026.
+
+Job seekers should focus on developing in-demand skills such as digital literacy, financial management, customer service, and technical specializations relevant to growth sectors.`
+            },
+            vicfalls: {
+                title: "Victoria Falls Tech Hub Launches - 200+ Digital Jobs Created",
+                tag: "TECH HUB",
+                fullText: `A new technology and innovation hub has officially launched in Victoria Falls, aiming to position Zimbabwe's tourism capital as a destination for digital nomads and tech professionals. The initiative will create over 200 jobs in its first year.
+
+The Victoria Falls Innovation Hub (VFIH) offers co-working spaces, high-speed internet, business incubation services, and training programs. The facility targets freelancers, startups, and remote workers in technology, creative industries, and digital services.
+
+Job opportunities include:
+- Web Developers and Designers
+- Digital Marketers and Content Creators
+- Graphic Designers and Video Editors
+- Customer Support Specialists
+- Virtual Assistants and Project Managers
+
+"Victoria Falls is not just a tourist destination; it's becoming a hub for digital innovation," said the VFIH director. "We're creating an ecosystem where tech talent can thrive while enjoying one of the world's most beautiful locations."
+
+The hub is partnering with international companies to provide remote work opportunities for Zimbabwean professionals. Starting salaries for tech positions range from $800-$1,500 per month, with potential for growth.
+
+Training programs in coding, digital marketing, and graphic design are being offered free of charge to qualifying applicants. The hub is particularly targeting youth and women entrepreneurs.
+
+Applications are open on the VFIH website and through job platforms like ZimGetHired.`
+            }
+        };
 
         // ============================================
         // DEMO DATA - 20 PRE-SEEDED PROFILES
@@ -2046,6 +2286,40 @@
                 renderJobBoard();
             }
         }
+		
+		function showAdminSection() {
+            // Ask for password
+            const password = prompt('🔐 Enter Admin Password:');
+            
+            // Check if password is correct
+            if (password === ADMIN_PASSWORD) {
+                // Password correct! Show admin section
+                
+                // First, hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Remove active styling from all nav tabs
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Show the admin section
+                document.getElementById('admin').classList.add('active');
+                
+                // Highlight the admin tab
+                event.target.classList.add('active');
+                
+                // Load the admin dashboard data
+                updateAdminDashboard();
+                
+            } else if (password !== null) {
+                // Password wrong - show error message
+                alert('❌ Incorrect password. Admin access denied.\n\nThe correct password is: ZimSuccess2026!');
+            }
+            // If user clicked Cancel, do nothing
+        }
 
         // ============================================
         // JOB SEEKER FUNCTIONALITY
@@ -2166,7 +2440,10 @@
                 createdAt: new Date()
             };
 
-            jobSeekers.push(profile);
+            const success = storage.addJobSeeker(profile);
+            
+            if (success) {
+                jobSeekers = storage.jobSeekers;
 
             document.getElementById('testSection').style.display = 'none';
             document.getElementById('jobseekerSuccess').style.display = 'block';
@@ -2175,6 +2452,7 @@
             updateAdminDashboard();
 
             console.log('Job seeker profile created:', profile);
+			}
         }
 
         // ============================================
@@ -2246,7 +2524,11 @@
                 postedAt: new Date()
             };
 
-            postedJobs.push(job);
+            const success = storage.addJob(job);
+            
+            if (!success) return;
+            
+            postedJobs = storage.postedJobs;
 
             // Log search
             employerSearchLog.push({
@@ -2494,6 +2776,11 @@
                             <div class="candidate-info">
                                 <h3>${candidate.name}</h3>
                                 <p>📍 ${candidate.location} | 📧 ${candidate.email}</p>
+								${candidate.hasVerifiedReference ? `
+                                    <div class="verified-badge">
+                                        ✓ Reference Verified
+                                    </div>
+                                ` : ''}
                                 <p style="color: var(--emerald); font-weight: 600; margin-top: 8px;">
                                     Roles: ${candidate.roles.slice(0, 3).join(', ')}${candidate.roles.length > 3 ? '...' : ''}
                                 </p>
@@ -2548,11 +2835,53 @@
                         <div style="margin: 20px 0; padding: 15px; background: white; border-radius: 12px; border: 2px solid rgba(4, 120, 87, 0.1);">
                             <strong>Documents:</strong><br>
                             📄 CV: ${candidate.cvFile}
-                            ${candidate.videoFile ? `<br>🎥 Video: ${candidate.videoFile} <span style="color: var(--emerald); font-weight: 600;">⭐ 4x Response!</span>` : '<br><em style="color: var(--text-muted);">No video intro</em>'}
+                            <button class="btn btn-secondary" 
+                                    style="padding: 6px 12px; font-size: 12px; margin-left: 10px;" 
+                                    onclick="viewCV('${candidate.cvFile}', '${candidate.name}')">
+                                👁️ View CV
+                            </button>
+                            ${candidate.videoFile ? `
+                                <br>🎥 Video: ${candidate.videoFile}
+                                <button class="btn btn-secondary" 
+                                        style="padding: 6px 12px; font-size: 12px; margin-left: 10px;" 
+                                        onclick="playVideo('${candidate.videoFile}', '${candidate.name}')">
+                                    ▶️ Play Video
+                                </button>
+                                <span style="color: var(--emerald); font-weight: 600;">⭐ 4x Response!</span>
+                            ` : '<br><em style="color: var(--text-muted);">No video intro</em>'}
                         </div>
 
-                        <div class="action-buttons">
-                            <a href="https://wa.me/263${candidate.whatsapp}?text=Hi%20${encodeURIComponent(candidate.name)}!%20I%20found%20your%20profile%20on%20ZimGetHired%20for%20${encodeURIComponent(jobTitle)}%20at%20${encodeURIComponent(company)}.%20Are%20you%20available%20for%20an%20interview?" 
+                        <div class="interview-scheduler">
+                            <h4 style="color: var(--emerald); margin-bottom: 15px;">📅 Schedule Interview</h4>
+                            <div class="scheduler-grid">
+                                <div>
+                                    <label style="font-size: 13px; font-weight: 600;">Interview Date:</label>
+                                    <input type="date" 
+                                           id="interview_date_${candidate.id}" 
+                                           min="${new Date().toISOString().split('T')[0]}"
+                                           style="padding: 10px; border-radius: 10px; border: 2px solid rgba(4, 120, 87, 0.2); width: 100%; font-family: 'Poppins', sans-serif;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 13px; font-weight: 600;">Interview Time:</label>
+                                    <input type="time" 
+                                           id="interview_time_${candidate.id}"
+                                           style="padding: 10px; border-radius: 10px; border: 2px solid rgba(4, 120, 87, 0.2); width: 100%; font-family: 'Poppins', sans-serif;">
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-block" 
+                                    onclick="scheduleInterview(${candidate.id}, '${candidate.name}', '${candidate.whatsapp}', '${company}', '${jobTitle}')"
+                                    style="margin-top: 15px; padding: 12px; font-size: 14px;">
+                                ⚡ Instant Book Interview via WhatsApp
+                            </button>
+                        </div>
+						
+						<div class="action-buttons">
+                            <button class="btn btn-secondary" 
+                                    onclick='addToWatchlist(${JSON.stringify(candidate)}, "${company}")' 
+                                    style="padding: 14px 28px; font-size: 14px;">
+                                ⭐ Save to Watchlist
+                            </button>
+							<a href="https://wa.me/263${candidate.whatsapp}?text=Hi%20${encodeURIComponent(candidate.name)}!%20I%20found%20your%20profile%20on%20ZimGetHired%20for%20${encodeURIComponent(jobTitle)}%20at%20${encodeURIComponent(company)}.%20Are%20you%20available%20for%20an%20interview?" 
                                target="_blank" 
                                class="whatsapp-btn">
                                 <span style="font-size: 20px;">📱</span> Contact on WhatsApp: +263${candidate.whatsapp}
@@ -2859,9 +3188,33 @@
         // ============================================
         
         function updateStats() {
-            document.getElementById('stat-seekers').textContent = jobSeekers.length;
-            document.getElementById('stat-jobs').textContent = postedJobs.filter(j => j.isLive).length;
-            document.getElementById('stat-matches').textContent = employerSearchLog.length + applicationLog.length;
+            // Get the actual numbers from data
+            const actualSeekers = jobSeekers.length;
+            const actualJobs = postedJobs.filter(j => j.isLive).length;
+            const actualMatches = employerSearchLog.length + applicationLog.length;
+            
+            // Add social proof padding to make platform look established
+            // This adds +100 to job seekers and +30 to jobs
+            const displaySeekers = actualSeekers + SOCIAL_PROOF_PADDING.JOB_SEEKERS;
+            const displayJobs = actualJobs + SOCIAL_PROOF_PADDING.JOB_POSTINGS;
+            
+            // Update the live stats widget (bottom right of page)
+            document.getElementById('stat-seekers').textContent = displaySeekers;
+            document.getElementById('stat-jobs').textContent = displayJobs;
+            document.getElementById('stat-matches').textContent = actualMatches;
+            
+            // Update the ticker (scrolling banner at top of home page)
+            if (document.getElementById('ticker-seekers')) {
+                document.getElementById('ticker-seekers').textContent = displaySeekers;
+            }
+            
+            // Admin dashboard shows REAL numbers (no padding)
+            if (document.getElementById('admin_total_seekers')) {
+                document.getElementById('admin_total_seekers').textContent = actualSeekers;
+                document.getElementById('admin_total_jobs').textContent = actualJobs;
+                document.getElementById('admin_total_searches').textContent = employerSearchLog.length;
+                document.getElementById('admin_total_applications').textContent = applicationLog.length;
+            }
         }
 
         function showModal(title, content) {
@@ -2870,7 +3223,205 @@
             document.getElementById('modal').classList.add('active');
         }
 
-        function closeModal() {
+        function viewCV(filename, candidateName) {
+            // Show a modal with CV preview
+            showModal(`📄 CV: ${candidateName}`, `
+                <div class="success-message">
+                    <p>In production, this would open the file: <strong>${filename}</strong></p>
+                    <p style="margin-top: 15px;">The CV would be displayed in a PDF viewer or downloaded directly to your device.</p>
+                    <div style="margin-top: 20px; padding: 30px; background: white; border-radius: 15px; text-align: center; border: 2px solid rgba(4, 120, 87, 0.1);">
+                        <p style="font-size: 64px; margin-bottom: 15px;">📄</p>
+                        <p style="color: var(--emerald); font-weight: 600; font-size: 18px;">CV Preview Placeholder</p>
+                        <p style="color: var(--text-muted); margin-top: 10px;">Click to download or view in browser</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="closeModal()">Close</button>
+            `);
+        }
+
+        function playVideo(filename, candidateName) {
+            // Show a modal with video player
+            showModal(`🎥 Video Introduction: ${candidateName}`, `
+                <div class="success-message">
+                    <p>In production, this would play the video file: <strong>${filename}</strong></p>
+                    <p style="margin-top: 15px;">Video would be embedded using HTML5 video player with play/pause controls.</p>
+                    <div style="margin-top: 20px; padding: 40px; background: #1f2937; border-radius: 15px; text-align: center; color: white;">
+                        <p style="font-size: 64px; margin-bottom: 15px;">▶️</p>
+                        <p style="font-size: 18px; font-weight: 600;">Video Player Placeholder</p>
+                        <p style="font-size: 14px; margin-top: 10px; opacity: 0.8;">30-60 second introduction video</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="closeModal()">Close</button>
+            `);
+        }
+		
+		function scheduleInterview(candidateId, name, whatsapp, company, jobTitle) {
+            // Get the date and time from the input fields
+            const date = document.getElementById(`interview_date_${candidateId}`).value;
+            const time = document.getElementById(`interview_time_${candidateId}`).value;
+            
+            // Check if both date and time are selected
+            if (!date || !time) {
+                alert('⚠️ Please select both date and time for the interview.');
+                return;
+            }
+            
+            // Format the date to look nice (e.g., "Monday, 15 March 2026")
+            const formattedDate = new Date(date).toLocaleDateString('en-GB', { 
+                weekday: 'long',    // Shows "Monday"
+                day: 'numeric',     // Shows "15"
+                month: 'long',      // Shows "March"
+                year: 'numeric'     // Shows "2026"
+            });
+            
+            // Create the WhatsApp message text
+            const message = `Hi ${name}! 
+
+I found your profile on ZimGetHired for the ${jobTitle} position at ${company}.
+
+I'd like to invite you for an interview:
+📅 Date: ${formattedDate}
+🕐 Time: ${time}
+
+Please confirm your availability. Looking forward to meeting you!`;
+            
+            // Create WhatsApp URL with the message pre-filled
+            const whatsappUrl = `https://wa.me/263${whatsapp}?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappUrl, '_blank');
+        }
+		
+		function addToWatchlist(candidate, company) {
+            // Save candidate to watchlist in localStorage
+            storage.addToWatchlist(candidate, company);
+            employerWatchlist = storage.employerWatchlist;
+            
+            // Show confirmation message
+            alert(`⭐ ${candidate.name} added to your watchlist!`);
+            
+            // Update the watchlist display
+            updateWatchlistDisplay();
+            
+            // Make sure watchlist section is visible
+            document.getElementById('watchlistSection').style.display = 'block';
+        }
+
+        function updateWatchlistDisplay() {
+            const container = document.getElementById('watchlistContainer');
+            const section = document.getElementById('watchlistSection');
+            
+            // If no candidates in watchlist, hide the section
+            if (employerWatchlist.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            
+            // Show the watchlist section
+            section.style.display = 'block';
+            
+            // Create HTML for each watchlist item
+            container.innerHTML = employerWatchlist.map(item => `
+                <div class="candidate-card" style="margin-bottom: 20px;">
+                    <h4 style="color: var(--emerald);">${item.candidate.name}</h4>
+                    <p>📍 ${item.candidate.location} | 📧 ${item.candidate.email}</p>
+                    <p style="margin-top: 10px;"><strong>Saved for:</strong> ${item.company}</p>
+                    <p style="font-size: 13px; color: var(--text-muted);">Added on: ${new Date(item.addedAt).toLocaleDateString()}</p>
+                    
+                    <div class="action-buttons">
+                        <a href="https://wa.me/263${item.candidate.whatsapp}?text=Hi%20${encodeURIComponent(item.candidate.name)}!%20Following%20up%20on%20your%20profile%20from%20ZimGetHired." 
+                           target="_blank" 
+                           class="whatsapp-btn">
+                            📱 Contact on WhatsApp
+                        </a>
+                        <button class="btn btn-danger" 
+                                onclick="removeFromWatchlist(${item.id})" 
+                                style="padding: 14px 28px;">
+                            🗑️ Remove from Watchlist
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeFromWatchlist(itemId) {
+            // Ask for confirmation before removing
+            if (confirm('Remove this candidate from your watchlist?')) {
+                // Filter out the item to remove
+                employerWatchlist = employerWatchlist.filter(item => item.id !== itemId);
+                
+                // Save to localStorage
+                storage.employerWatchlist = employerWatchlist;
+                storage.save('zimhire_watchlist', employerWatchlist);
+                
+                // Update display
+                updateWatchlistDisplay();
+            }
+        }
+		
+		function showNewsArticle(articleKey) {
+            // Get the article data from NEWS_ARTICLES object
+            const article = NEWS_ARTICLES[articleKey];
+            
+            // Show modal with full article text
+            showModal(article.title, `
+                <div style="background: rgba(255, 255, 255, 0.5); padding: 25px; border-radius: 15px; max-height: 500px; overflow-y: auto;">
+                    <span class="news-tag">${article.tag}</span>
+                    <div style="margin-top: 20px; line-height: 1.8; color: var(--text-dark); white-space: pre-line;">
+                        ${article.fullText}
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="closeModal()" style="margin-top: 20px;">Close</button>
+            `);
+        }
+
+        function filterSalaryTable() {
+            // Get what user typed in search box
+            const searchTerm = document.getElementById('salarySearch').value.toLowerCase();
+            
+            // Get all rows in the salary table
+            const rows = document.querySelectorAll('#salaryTable tbody tr');
+            
+            // Loop through each row
+            rows.forEach(row => {
+                // Get the role name (first column)
+                const role = row.cells[0].textContent.toLowerCase();
+                
+                // Check if role includes the search term
+                if (role.includes(searchTerm)) {
+                    row.style.display = '';  // Show row
+                } else {
+                    row.style.display = 'none';  // Hide row
+                }
+            });
+        }
+
+        function downloadCVTemplate() {
+            // Show modal with CV template info
+            showModal('📥 Download CV Template', `
+                <div class="success-message">
+                    <h3>Professional CV Template for Zimbabwe</h3>
+                    <p>In production, this would download a professionally designed .docx template file to your computer.</p>
+                    
+                    <p style="margin-top: 20px;"><strong>The template includes:</strong></p>
+                    <ul style="text-align: left; margin: 20px 40px; line-height: 2;">
+                        <li>✓ Professional formatting and layout</li>
+                        <li>✓ STAR method examples for achievements</li>
+                        <li>✓ Pre-formatted skills section</li>
+                        <li>✓ Zimbabwe-specific guidance and tips</li>
+                        <li>✓ Achievement-focused bullet points</li>
+                        <li>✓ ATS-friendly design (gets past automated filters)</li>
+                    </ul>
+                    
+                    <p style="margin-top: 15px; padding: 15px; background: var(--light-gold); border-radius: 10px;">
+                        💡 <strong>Pro Tip:</strong> Use the STAR method shown in the CV Resource Center to describe your achievements. Employers love seeing concrete results!
+                    </p>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="closeModal()">Got it!</button>
+            `);
+        }
+		
+		function closeModal() {
             document.getElementById('modal').classList.remove('active');
         }
 
@@ -2884,8 +3435,82 @@
         // INITIALIZE
         // ============================================
         
-        window.onload = function() {
+        // Track if data saver mode is active
+        let dataSaverActive = false;
+
+        function toggleDataSaver() {
+            // Toggle the mode
+            dataSaverActive = !dataSaverActive;
+            
+            if (dataSaverActive) {
+                // Turn ON data saver
+                document.body.classList.add('data-saver-mode');
+                document.getElementById('dataSaverStatus').textContent = 'ON';
+                localStorage.setItem('dataSaverMode', 'true');
+            } else {
+                // Turn OFF data saver
+                document.body.classList.remove('data-saver-mode');
+                document.getElementById('dataSaverStatus').textContent = 'OFF';
+                localStorage.setItem('dataSaverMode', 'false');
+            }
+        }
+
+        function showJobFair() {
+            // Show virtual job fair modal
+            showModal('🎪 Virtual Job Fair - LIVE NOW', `
+                <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 20px;">
+                    <h2 style="color: white; margin-bottom: 15px;">🔴 LIVE Virtual Job Fair</h2>
+                    <p style="font-size: 18px; opacity: 0.95;">Connect with Zimbabwe's top employers NOW</p>
+                </div>
+                
+                <div style="background: white; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: var(--emerald); margin-bottom: 15px;">Featured Employers Today:</h4>
+                    <div style="display: grid; gap: 15px;">
+                        <div style="padding: 15px; background: var(--light-gold); border-radius: 10px; border-left: 4px solid var(--gold);">
+                            <strong>EcoCash Holdings</strong><br>
+                            <small>Hiring: Software Developers, Customer Service Reps</small>
+                        </div>
+                        <div style="padding: 15px; background: var(--light-gold); border-radius: 10px; border-left: 4px solid var(--gold);">
+                            <strong>Delta Beverages</strong><br>
+                            <small>Hiring: Sales Representatives, Logistics Officers</small>
+                        </div>
+                        <div style="padding: 15px; background: var(--light-gold); border-radius: 10px; border-left: 4px solid var(--gold);">
+                            <strong>OK Zimbabwe</strong><br>
+                            <small>Hiring: Store Managers, Accountants</small>
+                        </div>
+                        <div style="padding: 15px; background: var(--light-gold); border-radius: 10px; border-left: 4px solid var(--gold);">
+                            <strong>CBZ Bank</strong><br>
+                            <small>Hiring: Tellers, Relationship Managers</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="success-message">
+                    <p>💡 <strong>How to participate:</strong></p>
+                    <p style="margin-top: 10px; line-height: 1.8;">
+                        1. Ensure your ZimGetHired profile is complete<br>
+                        2. Browse the Job Board for live opportunities<br>
+                        3. Apply directly or wait for employer contact<br>
+                        4. Check your WhatsApp for interview requests
+                    </p>
+                </div>
+                
+                <button class="btn btn-primary btn-block" onclick="closeModal(); showSection('jobboard')">
+                    View Job Board →
+                </button>
+            `);
+        }
+		
+		window.onload = function() {
             initializeApp();
+			
+			// Check if data saver was previously enabled
+            const savedPreference = localStorage.getItem('dataSaverMode');
+            if (savedPreference === 'true') {
+                dataSaverActive = true;
+                document.body.classList.add('data-saver-mode');
+                document.getElementById('dataSaverStatus').textContent = 'ON';
+            }
         };
     </script>
 </body>
