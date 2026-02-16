@@ -2716,16 +2716,16 @@ function handleJobSeekerClick() {
         }
 
         function handleEmployerClick() {
-            if (!auth.isLoggedIn()) {
-                showSection('employer');
-                return;
-            }
-            
-            if (auth.getUserRole() === 'employer') {
-                showSection('employer-dashboard');
-                loadEmployerDashboard();
-            }
-        }
+    if (!auth.isLoggedIn()) {
+        showSection('employer');
+        return;
+    }
+    
+    if (auth.getUserRole() === 'employer') {
+        showSection('employer'); 
+        loadEmployerContent(); 
+    }
+}
 
         function loadJobSeekerContent() {
             const container = document.getElementById('jobseekerContent');
@@ -4770,3 +4770,4 @@ Please confirm your availability. Looking forward to meeting you!`;
     </script>
 </body>
 </html>		
+
