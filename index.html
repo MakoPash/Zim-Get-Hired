@@ -4239,19 +4239,18 @@ Starting salaries for tech positions range from $800-$1,500 per month. Training 
         }
 
         function viewJobMatches() {
-            const job = postedJobs[0];
-            
-            document.getElementById('resultsSection').style.display = 'block';
-            document.getElementById('candidatesList').innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 48px; margin-bottom: 20px;">🔍</div>
-                    <p style="color: var(--emerald); font
-					-size: 18px; font-weight: 600;">Searching for matching candidates...</p>
-                </div>
-            `;
+    const job = postedJobs[0];
+    
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('candidatesList').innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+            <div style="font-size: 48px; margin-bottom: 20px;">🔍</div>
+            <p style="color: var(--emerald); font-size: 18px; font-weight: 600;">Searching for matching candidates...</p>
+        </div>
+    `;
 
-            setTimeout(() => {
-                const matches = enhancedMatchCandidates(
+    setTimeout(() => {
+        const matches = enhancedMatchCandidates(
                     job.role_category,
                     job.company,
                     job.job_title,
